@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS reservations;
+DROP TABLE IF EXISTS ratings;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS vehicles;
@@ -51,6 +52,16 @@ CREATE TABLE reservations(
     client_id INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(place_id) REFERENCES places(id),
+    FOREIGN KEY(vehicle_id) REFERENCES vehicles(id),
+    FOREIGN KEY(client_id) REFERENCES users(id)
+);
+
+CREATE TABLE ratings(
+    id INT AUTO_INCREMENT,
+    rate INT,
+    vehicle_id INT NOT NULL,
+    client_id INT NOT NULL,
+    PRIMARY KEY(id),
     FOREIGN KEY(vehicle_id) REFERENCES vehicles(id),
     FOREIGN KEY(client_id) REFERENCES users(id)
 );
