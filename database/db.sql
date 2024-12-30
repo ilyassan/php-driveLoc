@@ -99,6 +99,18 @@ GROUP BY
 
 
 
+CREATE PROCEDURE AddReservation (
+    IN p_from_date DATE,
+    IN p_to_date DATE,
+    IN p_place_id INT,
+    IN p_vehicle_id INT,
+    IN p_client_id INT
+)
+BEGIN
+    INSERT INTO reservations (from_date, to_date, place_id, vehicle_id, client_id)
+    VALUES (p_from_date, p_to_date, p_place_id, p_vehicle_id, p_client_id);
+END;
+
 
 -- Seeding roles
 INSERT INTO roles (name) VALUES ('client'), ('admin');
