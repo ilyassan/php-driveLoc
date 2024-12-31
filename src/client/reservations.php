@@ -1,4 +1,4 @@
-<?php include("../inc/header.php") ?>
+<?php include("./inc/header.php") ?>
 
 <section class="container bg-gray-50 py-10">
     <!-- Hero Section -->
@@ -137,4 +137,4 @@
     });
 </script>
 
-<?php include("../inc/footer.php") ?>
+<?php include("./inc/footer.php") ?>
