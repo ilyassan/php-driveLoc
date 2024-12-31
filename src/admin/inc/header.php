@@ -85,7 +85,7 @@
     <!-- Main Content -->
     <main class="lg:ml-64 min-h-screen">
         <header class="bg-white shadow-sm">
-            <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex h-16 items-center justify-between px-4 py-3">
                 <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
                 
                 <div class="flex items-center gap-4">
