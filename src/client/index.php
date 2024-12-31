@@ -1,4 +1,4 @@
-<?php include("../inc/header.php") ?>
+<?php include("./inc/header.php") ?>
 
 <main class="container py-12">
     <!-- Hero Section -->
@@ -276,4 +276,4 @@
 
 </main>
 
-<?php include("../inc/footer.php") ?>
+<?php include("./inc/footer.php") ?>

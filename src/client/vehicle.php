@@ -1,4 +1,4 @@
-<?php include("../inc/header.php") ?>
+<?php include("./inc/header.php") ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -254,4 +254,4 @@
 
 </script>
 
-<?php include("../inc/footer.php") ?>
+<?php include("./inc/footer.php") ?>
