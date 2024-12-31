@@ -4,8 +4,8 @@
     <form action="" method="POST" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-6">
         <div class="flex justify-center mb-4">
             <div class="flex relative justify-center w-80 h-60">
-                <img id="menu-image" class="border-2 border-gray-300 rounded-lg w-full h-full" src="../../assets/images/dishes/23808324.jpg" alt="Menu">
-                <label for="image" class="cursor-pointer border-2 border-gray-300 rounded-lg absolute w-full h-full bg-gray-50 text-gray-500 flex justify-center items-center">Upload an Image</label>
+                <img id="menu-image" class="border-2 border-gray-300 rounded-lg w-full h-full" src="../images/car-hero.jpg" alt="Menu">
+                <label for="image" class="cursor-pointer opacity-0 border-2 border-gray-300 rounded-lg absolute w-full h-full bg-gray-50 text-gray-500 flex justify-center items-center">Upload an Image</label>
                 <input type="file" id="image" class="hidden" accept="image/gif, image/jpeg, image/png">
             </div>
         </div>
@@ -13,13 +13,13 @@
             <!-- Vehicle Name -->
             <div>
                 <label for="vehicle_name" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Name</label>
-                <input type="text" id="vehicle_name" name="vehicle_name" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Porsche" required />
+                <input type="text" id="vehicle_name" name="vehicle_name" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Porsche" value="Proshe" required />
             </div>
 
             <!-- Vehicle Model -->
             <div>
                 <label for="vehicle_model" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Model</label>
-                <input type="text" id="vehicle_model" name="vehicle_model" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="911 GT3" required />
+                <input type="text" id="vehicle_model" name="vehicle_model" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="911 GT3" value="GTX 2090" required />
             </div>
 
            <!-- Category menu -->
@@ -31,7 +31,7 @@
                     class="flex items-center border border-gray-300 rounded-md px-4 py-2 w-full bg-gray-50 text-gray-500 focus:outline-none"
                 >
                     <i class="fas fa-chair text-gray-500 mr-2"></i>
-                    <span id="selectedCategories">Categories</span>
+                    <span id="selectedCategories">Sports Cars</span>
                     <i class="fas fa-chevron-down ml-auto text-gray-400"></i>
                 </span>
                 <!-- Dropdown Options -->
@@ -48,7 +48,7 @@
             <!-- Number of Seats -->
             <div>
                 <label for="seats" class="block mb-2 text-sm font-medium text-gray-700">Number of Seats</label>
-                <input type="number" id="seats" name="seats" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="4" required />
+                <input type="number" id="seats" name="seats" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="4" value="4" required />
             </div>
 
              <!-- Price per Day -->
@@ -58,7 +58,7 @@
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                        <span class="text-gray-500 text-sm">$</span>
                    </div>
-                   <input type="number" id="price_per_day" name="price_per_day" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-7" placeholder="250" required />
+                   <input type="number" id="price_per_day" name="price_per_day" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-7" placeholder="250" value="250" required />
                  </div>
             </div>
         </div>
@@ -78,7 +78,6 @@
 
             reader.onload = function (e) {
                 imageElement.src = e.target.result;
-                label.classList.add("opacity-0");
             };
 
             reader.readAsDataURL(imageInput.files[0]);
