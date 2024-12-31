@@ -2,7 +2,7 @@
 
 <main class="bg-primary/10 py-12">
     <div class="max-w-xl bg-white p-5 rounded-lg shadow-lg mx-auto">
-        <h1 class="font-bold text-2xl lg:text-3xl text-center mb-10 text-secondary">Log In To <span class="text-primary font-extrabold">Carex</span></h1>
+        <h1 class="font-bold text-2xl text-center mb-10 text-secondary">Log In To <span class="text-primary font-extrabold">Carex</span></h1>
         <form action="" method="POST">
             <div class="mb-4">
                 <label for="email" class="block mb-2 text-xs font-medium">Email</label>
