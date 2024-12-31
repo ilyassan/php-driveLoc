@@ -40,7 +40,7 @@
           <a href="#">Reservations</a>
         </li>
         <li
-          class="cursor-pointer mt-5 sm:m-0 pb-1 transition-all duration-300 bg-primary text-white px-2 rounded-lg"
+          class="cursor-pointer mt-5 sm:m-0 pt-1 pb-2 transition-all duration-300 bg-primary text-white px-2 rounded-lg"
         >
           Logout
         </li>
