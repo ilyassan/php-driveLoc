@@ -59,6 +59,34 @@
             Search <i class="fa-solid fa-search"></i>
         </button>
     </div>
+
+
+        <!-- Vehicle Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <?php for ($i = 0; $i < 6; $i++): ?>
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src="../images/porsche.webp" alt="Car Image" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-bold text-secondary mb-2">Vehicle Name</h3>
+                <p class="text-gray-500 text-sm">Seats: 6</p>
+                <div class="mt-2">
+                    <span class="text-primary font-bold">$25,000 / Day</span>
+                </div>
+                <div class="mt-2 flex items-center text-sm text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span class="ml-2 text-gray-600">(4.5)</span>
+                </div>
+                <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
+                    View Details
+                </a>
+            </div>
+        </div>
+        <?php endfor; ?>
+    </div>
 </section>
 
 
