@@ -61,8 +61,8 @@
     </div>
 
 
-        <!-- Vehicle Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Vehicle Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php for ($i = 0; $i < 6; $i++): ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <img src="../images/porsche.webp" alt="Car Image" class="w-full h-48 object-cover">
