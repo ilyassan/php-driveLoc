@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./css/all.min.css" rel="stylesheet" />
-    <link href="./css/fontawesome.min.css" rel="stylesheet" />
-    <link href="./css/output.css" rel="stylesheet" />
+    <link href="../css/all.min.css" rel="stylesheet" />
+    <link href="../css/fontawesome.min.css" rel="stylesheet" />
+    <link href="../css/output.css" rel="stylesheet" />
   </head>
   <body>
     <nav class="container relative sm:py-5 flex justify-between">

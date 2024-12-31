@@ -1,4 +1,4 @@
-<?php include("./inc/header.php") ?>
+<?php include("../inc/header.php") ?>
 
 
 <main class="bg-primary/10 py-12">
@@ -33,4 +33,4 @@
     </div>
 </main>
 
-<?php include("./inc/footer.php") ?>
+<?php include("../inc/footer.php") ?>
