@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS categories;
 -- Creating tables
 CREATE TABLE roles(
     id INT AUTO_INCREMENT,
-    name ENUM('client', 'admin') NOT NULL,
+    name VARCHAR(25) NOT NULL,
     PRIMARY KEY(id)
 );
 
