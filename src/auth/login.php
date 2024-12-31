@@ -1,4 +1,4 @@
-<?php include("./inc/header.php") ?>
+<?php include("../inc/header.php") ?>
 
 <main class="bg-primary/10 py-12">
     <div class="max-w-xl bg-white p-5 rounded-lg shadow-lg mx-auto">
@@ -20,4 +20,4 @@
     </div>
 </main>
 
-<?php include("./inc/footer.php") ?>
+<?php include("../inc/footer.php") ?>
