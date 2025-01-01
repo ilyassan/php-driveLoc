@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/all.min.css" rel="stylesheet" />
-    <link href="../css/fontawesome.min.css" rel="stylesheet" />
-    <link href="../css/output.css" rel="stylesheet" />
+    <link href=<?= ASSETSROOT ."css/all.min.css"?> rel="stylesheet" />
+    <link href=<?= ASSETSROOT ."css/fontawesome.min.css"?> rel="stylesheet" />
+    <link href=<?= ASSETSROOT ."css/output.css"?> rel="stylesheet" />
   </head>
   <body>
-    <nav class="container relative sm:py-5 flex justify-between">
+    <nav class="container relative sm:py-4 flex justify-between">
       <div
-        class="py-5 sm:p-0 bg-white relative flex justify-between flex-1 items-center z-20"
+        class="py-4 sm:p-0 bg-white relative flex justify-between flex-1 items-center z-20"
       >
         <a href="#" class="text-primary font-bold text-2xl">CAREX</a>
         <span
