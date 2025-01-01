@@ -26,5 +26,6 @@
     $router->add('GET', '/signup', 'SignupPage@index');
     $router->add('POST', '/signup', 'SignupPage@signup');
     $router->add('GET', '/login', 'LoginPage@index');
+    $router->add('POST', '/login', 'LoginPage@login');
 
     $router->dispatch($request);
