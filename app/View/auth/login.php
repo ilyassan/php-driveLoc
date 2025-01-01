@@ -1,5 +1,3 @@
-<?php include("../inc/header.php") ?>
-
 <main class="bg-primary/10 py-12">
     <div class="max-w-xl bg-white p-5 rounded-lg shadow-lg mx-auto">
         <h1 class="font-bold text-2xl text-center mb-10 text-secondary">Log In To <span class="text-primary font-extrabold">Carex</span></h1>
@@ -19,5 +17,3 @@
         </form>
     </div>
 </main>
-
-<?php include("../inc/footer.php") ?>

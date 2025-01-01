@@ -70,6 +70,19 @@
 
             // Make sure errors are empty (There's no errors)
             if(empty($errors['first_name_err']) && empty($errors['last_name_err']) && empty($errors['email_err']) && empty($errors['password_err']) && empty($errors['confirm_password_err'])){
+                // Hash Password
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                $user = new User(null, $data['first_name'], $data['last_name'] , $data['email'], $data['password'], User::$clientRoleId);
+
+                // Register user
+                if($user->save()){
+                    // Register success
+                    flash('success', 'You are registered and can log in.');
+                    redirect('login');
+                }else{
+                    die('Something went wrong');
+                }
             }
             else{
                 // Load view with errors
