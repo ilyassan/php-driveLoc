@@ -1,4 +1,3 @@
-<?php include("./inc/header.php") ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -7,24 +6,35 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg p-6">
         <!-- Car Image -->
         <div class="flex items-center justify-center">
-            <img src="../images/porsche.webp" alt="Car Image" class="rounded-lg w-full h-80">
+            <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Car Image" class="rounded-lg w-full h-80">
         </div>
 
         <!-- Car Information -->
         <div class="flex flex-col justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800">Car Name</h1>
-                <p class="text-gray-600 mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is a luxury car with advanced features and a comfortable interior, perfect for your trips.</p>
+                <h1 class="text-3xl font-bold text-gray-800"><?= $vehicle->getName() ?></h1>
+                <p class="text-gray-600 mt-2">Anywhere, this car is got your back. This is a luxury car with advanced features and a comfortable interior, perfect for your trips.</p>
                 <div class="mt-4">
-                    <p class="text-lg text-gray-700"><strong>Price:</strong> $250 / Day</p>
-                    <p class="text-lg text-gray-700"><strong>Seats:</strong> 6</p>
+                    <p class="text-lg text-gray-700"><strong>Model:</strong> <?= $vehicle->getModel() ?></p>
+                    <p class="text-lg text-gray-700"><strong>Seats:</strong> <?= $vehicle->getSeats() ?></p>
+                    <p class="text-lg text-gray-700"><strong>Price:</strong> $<?= $vehicle->getPrice() ?> / Day</p>
                     <div class="mt-2 flex items-center text-sm text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <span class="ml-2 text-gray-600">(4.5)</span>
+                    <?php
+                        $fullStars = floor($vehicle->getRating());
+                        $halfStar = ($vehicle->getRating() - $fullStars) >= 0.5 ? 1 : 0;
+                        $emptyStars = 5 - $fullStars - $halfStar;
+
+                        for ($i = 0; $i < $fullStars; $i++) {
+                            echo '<i class="fas fa-star"></i>';
+                        }
+                        if ($halfStar) {
+                            echo '<i class="fas fa-star-half-alt"></i>';
+                        }
+                        for ($i = 0; $i < $emptyStars; $i++) {
+                            echo '<i class="far fa-star"></i>';
+                        }
+                    ?>
+                        <span class="ml-2 text-gray-600">(<?= number_format($vehicle->getRating(), 2) ?>)</span>
                     </div>
                 </div>
             </div>
@@ -48,6 +58,7 @@
                          <div>
                             <label for="locationDropdown" class="block text-gray-600 font-semibold mb-2">Location:</label>
                             <div class="relative">
+                                <input id="place_id" type="hidden" name="place_id">
                                 <span
                                     id="locationDropdown"
                                     class="flex cursor-pointer items-center border border-gray-300 rounded-md px-4 py-2 w-full bg-white text-gray-500 focus:outline-none"
@@ -61,10 +72,9 @@
                                     id="locationDropdownMenu"
                                     class="absolute dropdown-menu hidden bg-white shadow-md rounded-md w-full mt-2 z-10"
                                 >
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', 'New York')">New York</li>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', 'Los Angeles')">Los Angeles</li>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', 'Chicago')">Chicago</li>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', 'Miami')">Miami</li>
+                                <?php foreach ($places as $place): ?>
+                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', '<?= $place->getName() ?>', '<?= $place->getId() ?>')"><?= $place->getName() ?></li>
+                                <?php endforeach; ?>
                                 </ul>
                             </div>
                          </div>
@@ -103,7 +113,8 @@
         menu.classList.toggle('hidden');
     }
 
-    function selectOption(dropdownId, labelId, value) {
+    function selectOption(dropdownId, labelId, value, id = null) {
+        document.getElementById("place_id").value = id;
         document.getElementById(labelId).innerText = value;
         document.getElementById(`${dropdownId}Menu`).classList.add('hidden');
     }
@@ -253,5 +264,3 @@
     });
 
 </script>
-
-<?php include("./inc/footer.php") ?>
