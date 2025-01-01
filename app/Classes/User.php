@@ -8,8 +8,8 @@ class User extends BaseClass
     private $password;
     private $role_id;
 
-    static public $adminRoleId = 1;
-    static public $clientRoleId = 2;
+    static public $adminRoleId = 2;
+    static public $clientRoleId = 1;
 
     public function __construct($id, $first_name, $last_name, $email, $password, $role_id)
     {
@@ -50,6 +50,11 @@ class User extends BaseClass
         return $this->role_id == self::$clientRoleId;
     }
 
+    public function getRoleName()
+    {
+        return $this->isAdmin() ? "admin" : "client";
+    }
+
     public function save()
     {
         $sql = "INSERT INTO users (first_name, last_name, email, password_hash, role_id) VALUES (:first_name, :last_name, :email, :password_hash, :role_id)";
@@ -62,6 +67,21 @@ class User extends BaseClass
 
         if (self::$db->execute()) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function find($id)
+    {
+        $sql = "SELECT * FROM users WHERE id = :id";
+        self::$db->query($sql);
+        self::$db->bind(':id', $id);
+        self::$db->execute();
+        $result = self::$db->single();
+
+        if (self::$db->rowCount() > 0) {
+            return new self($result->id, $result->first_name, $result->last_name, $result->email, $result->password_hash, $result->role_id);
         } else {
             return false;
         }
@@ -80,5 +100,10 @@ class User extends BaseClass
         } else {
             return false;
         }
+    }
+
+    public function createSession()
+    {
+        $_SESSION['user_id'] = $this->id;
     }
 }

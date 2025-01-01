@@ -1,5 +1,3 @@
-<?php include("./inc/header.php") ?>
-
 <main class="container py-12">
     <!-- Hero Section -->
     <div class="hero flex flex-col md:flex-row items-center gap-8">
@@ -23,7 +21,7 @@
             </div>
         </div>
         <div class="hidden sm:block">
-            <img src="../images/car-hero.jpg" alt="Car Hero" class="max-w-xl -scale-x-100 mx-auto">
+            <img src=<?= ASSETSROOT . "images/car-hero.jpg"?> alt="Car Hero" class="max-w-xl -scale-x-100 mx-auto">
         </div>
     </div>
 
@@ -40,7 +38,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Card 1 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/porsche.webp" alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Porsche Cayenne 2020</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -63,7 +61,7 @@
             </div>
             <!-- Card 2 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/maserati.webp" alt="Maserati Levante 2021" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/maserati.webp"?>  alt="Maserati Levante 2021" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Maserati Levante 2021</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -86,7 +84,7 @@
             </div>
             <!-- Card 3 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/bentley.webp" alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/bentley.webp" ?> alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Bentley Flying Spur 2019</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -121,7 +119,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Card 1 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/porsche.webp" alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Porsche Cayenne 2020</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -144,7 +142,7 @@
             </div>
             <!-- Card 2 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/maserati.webp" alt="Maserati Levante 2021" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/maserati.webp"?>  alt="Maserati Levante 2021" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Maserati Levante 2021</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -167,7 +165,7 @@
             </div>
             <!-- Card 3 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/bentley.webp" alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/bentley.webp" ?> alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Bentley Flying Spur 2019</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -202,7 +200,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Card 1 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/porsche.webp" alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Porsche Cayenne 2020</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -225,7 +223,7 @@
             </div>
             <!-- Card 2 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/maserati.webp" alt="Maserati Levante 2021" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/maserati.webp"?>  alt="Maserati Levante 2021" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Maserati Levante 2021</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -248,7 +246,7 @@
             </div>
             <!-- Card 3 -->
             <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="../images/bentley.webp" alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
+                <img src=<?= ASSETSROOT . "images/bentley.webp" ?> alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg mb-2">Bentley Flying Spur 2019</h3>
                     <p class="text-sm text-gray-500 flex items-center mb-2">
@@ -275,5 +273,3 @@
     <a href="#" class="bg-primary mx-auto block w-fit text-white px-3 py-2 rounded-lg font-semibold">Explore All Cars</a>
 
 </main>
-
-<?php include("./inc/footer.php") ?>
