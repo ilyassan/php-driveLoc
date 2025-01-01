@@ -8,8 +8,9 @@
     private $price;
     private $type_id;
     private $category_id;
+    private $rating;
 
-    public function __construct($id, $name, $model, $seats, $price, $type_id, $category_id)
+    public function __construct($id, $name, $model, $seats, $price, $type_id, $category_id, $rating = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -18,6 +19,7 @@
         $this->price = $price;
         $this->type_id = $type_id;
         $this->category_id = $category_id;
+        $this->rating = $rating;
     }
 
     public function getId()
@@ -55,15 +57,24 @@
         return $this->category_id;
     }
 
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
     public static function find(int $id) {
-        $sql = "SELECT * FROM vehicles
-                WHERE id = :id";
+        $sql = "SELECT v.*, AVG(r.rate) as rating
+                FROM vehicles v
+                LEFT JOIN ratings r ON r.vehicle_id = v.id
+                WHERE v.id = :id
+                GROUP BY v.id";
         self::$db->query($sql);
         self::$db->bind(':id', $id);
         self::$db->execute();
 
+
         $result = self::$db->single();
-        return new self($result->id, $result->name, $result->model, $result->seats, $result->price, $result->type_id, $result->category_id);
+        return new self($result->id, $result->name, $result->model, $result->seats, $result->price, $result->type_id, $result->category_id, $result->rating);
     }
     
     public static function all($filters = [])

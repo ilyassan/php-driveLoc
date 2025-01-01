@@ -21,6 +21,8 @@
 
     $router->add('GET', '/', 'HomePage@index', "client");
     $router->add('GET', '/vehicles', 'VehiclesPage@index', "client");
+    $router->add('GET', '/vehicles/{id}', 'VehiclesDetailsPage@index', "client");
+
     $router->add('POST', '/api/vehicles', 'VehiclesPage@getFilteredVehicles');
 
     $router->add('GET', '/', 'DashboardPage@index', "admin");
