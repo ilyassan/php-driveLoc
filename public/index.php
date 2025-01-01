@@ -12,9 +12,12 @@
     $db = new Database();
     BaseClass::setDatabase($db);
 
+    require_all_files(__DIR__ . '/../app/Classes');
+
 
     require_once __DIR__ . '/../app/Helpers/url_helper.php';
     require_once __DIR__ . '/../app/Helpers/session_helper.php';
+    require_once __DIR__ . '/../app/Helpers/custom_functions.php';
 
     // Define the routes
     $router = new Router();
