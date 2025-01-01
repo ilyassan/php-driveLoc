@@ -68,16 +68,24 @@
     
     public static function all()
     {
-        $sql = "SELECT * FROM vehicles";
+        $sql =  "SELECT v.*,
+                        AVG(r.rate) as rating,
+                        COUNT(r.rate) as rates_count,
+                        c.name as category,
+                        t.name as type
+                FROM vehicles v
+                JOIN types t ON v.type_id = t.id
+                JOIN categories c ON v.category_id = c.id
+                LEFT JOIN ratings r ON v.id = r.vehicle_id
+                GROUP BY v.id
+                ORDER BY rating
+                ";
         self::$db->query($sql);
         self::$db->execute();
 
         $result = self::$db->results();
-        $vehicles = [];
-        foreach ($result as $vehicle) {
-            $vehicles[] = new self($vehicle['id'], $vehicle['name'], $vehicle['model'], $vehicle['seats'], $vehicle['price'], $vehicle['type_id'], $vehicle['category_id']);
-        }
-        return $vehicles;  
+
+        return $result;  
     }
 
 

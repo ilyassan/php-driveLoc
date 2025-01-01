@@ -20,6 +20,8 @@
     $request = new Request();
 
     $router->add('GET', '/', 'HomePage@index', "client");
+    $router->add('GET', '/vehicles', 'VehiclesPage@index', "client");
+
     $router->add('GET', '/', 'DashboardPage@index', "admin");
 
 

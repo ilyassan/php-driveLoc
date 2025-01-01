@@ -1,5 +1,3 @@
-<?php include("./inc/header.php") ?>
-
 <section class="container bg-gray-50 py-10">
     <!-- Hero Section -->
     <div class="text-center mb-10">
@@ -63,29 +61,41 @@
 
     <!-- Vehicle Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php for ($i = 0; $i < 6; $i++): ?>
+        <?php foreach ($vehicles as $vehicle): ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <img src="../images/porsche.webp" alt="Car Image" class="w-full h-48 object-cover">
+            <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Car Image" class="w-full h-48 object-cover">
             <div class="p-4">
-                <h3 class="text-lg font-bold text-secondary mb-2">Vehicle Name</h3>
-                <p class="text-gray-500 text-sm">Seats: 6</p>
+                <h3 class="text-lg font-bold text-secondary"><?= $vehicle["name"] ?></h3>
+                <p class="text-gray-500 text-sm"><?= $vehicle["category"] ?></p>
+                <p class="text-gray-500 text-sm mb-0.5">Seats: <?= $vehicle["seats"] ?></p>
+                <p class="text-sm text-gray-500 mb-2 flex items-center"><i class="fas <?= $vehicle["type"] == "Gas" ? "fa-gas-pump" : "fa-car-battery"?> text-gray-500 mr-1"></i> <?= $vehicle["type"] ?></p>
                 <div class="mt-2">
-                    <span class="text-primary font-bold">$25,000 / Day</span>
+                    <span class="text-primary font-bold">$<?= $vehicle["price"] ?>/ Day</span>
                 </div>
                 <div class="mt-2 flex items-center text-sm text-yellow-400">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span class="ml-2 text-gray-600">(4.5)</span>
+                <?php
+                    $fullStars = floor($vehicle["rating"]);
+                    $halfStar = ($vehicle["rating"] - $fullStars) >= 0.5 ? 1 : 0;
+                    $emptyStars = 5 - $fullStars - $halfStar;
+
+                    for ($i = 0; $i < $fullStars; $i++) {
+                        echo '<i class="fas fa-star"></i>';
+                    }
+                    if ($halfStar) {
+                        echo '<i class="fas fa-star-half-alt"></i>';
+                    }
+                    for ($i = 0; $i < $emptyStars; $i++) {
+                        echo '<i class="far fa-star"></i>';
+                    }
+                ?>
+                    <span class="ml-2 text-gray-600">(<?= number_format($vehicle["rating"], 2) ?>)</span>
                 </div>
                 <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
                     View Details
                 </a>
             </div>
         </div>
-        <?php endfor; ?>
+        <?php endforeach; ?>
     </div>
 </section>
 
@@ -120,8 +130,3 @@
         closeAllDropdowns();
     });
 </script>
-
-
-
-
-<?php include("./inc/footer.php") ?>
