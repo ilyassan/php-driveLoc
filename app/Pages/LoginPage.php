@@ -63,4 +63,12 @@
                 redirect('login');
             }
         }
+
+        public function logout(){
+            if (!isLoggedIn()) {
+                redirect("");
+            }
+            user()->destroySession();
+            redirect("login");
+        }
     }

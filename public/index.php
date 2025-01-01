@@ -22,10 +22,11 @@
     $router->add('GET', '/', 'HomePage@index', "client");
     $router->add('GET', '/', 'DashboardPage@index', "admin");
 
-    
+
     $router->add('GET', '/signup', 'SignupPage@index');
     $router->add('POST', '/signup', 'SignupPage@signup');
     $router->add('GET', '/login', 'LoginPage@index');
     $router->add('POST', '/login', 'LoginPage@login');
+    $router->add('POST', '/logout', 'LoginPage@logout');
 
     $router->dispatch($request);
