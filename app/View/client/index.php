@@ -27,248 +27,48 @@
 
     <h1 class="font-bold text-3xl text-center text-secondary">Our Collection</h1>
 
-    <!-- Sport Cars -->
-    <section class="bg-white py-12">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-secondary">Sport Cars</h2>
-            <a href="#" class="text-primary font-medium hover:underline flex items-center">
-                See all <span class="ml-1"><i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Porsche Cayenne 2020</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$400<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
+    <?php
+        foreach ($categoriesWithVehicles as $category => $vehicles) {
+    ?>
+        <section class="bg-white py-12">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-secondary">Sport Cars</h2>
+                <a href="#" class="text-primary font-medium hover:underline flex items-center">
+                    See all <span class="ml-1"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
             </div>
-            <!-- Card 2 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/maserati.webp"?>  alt="Maserati Levante 2021" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Maserati Levante 2021</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php
+                    foreach ($vehicles as $vehicle) {
+                ?>
+                    <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-2"><?= $vehicle["name"] ?></h3>
+                            <p class="text-sm text-gray-500 flex items-center mb-2">
+                                <span class="text-yellow-500">&#9733;</span>
+                                <?= number_format($vehicle["rating"], 2) ?> (<?= $vehicle["rates_count"] ?>) Reviews
+                            </p>
+                            <p class="text-sm text-gray-500 mb-2 flex items-center">
+                                <span class="mr-1"><i class="fas fa-chair text-gray-500 mr-0.5"></i></span> <?= $vehicle["seats"] ?> Seats
+                            </p>
+                            <p class="text-sm text-gray-500 mb-4 flex items-center">
+                                <span class="mr-1"><i class="fas <?= $vehicle["type"] == "Gas" ? "fa-gas-pump" : "fa-car-battery"?> text-gray-500 mr-0.5"></i></span> <?= $vehicle["type"] ?>
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl font-bold text-secondary">$<?= $vehicle["price"] ?><span class="text-sm font-medium">/day</span></p>
+                                <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$500<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
+                <?php
+                    }    
+                ?>
             </div>
-            <!-- Card 3 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/bentley.webp" ?> alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Bentley Flying Spur 2019</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$700<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Luxury Cars -->
-    <section class="bg-white py-12">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-secondary">Sport Cars</h2>
-            <a href="#" class="text-primary font-medium hover:underline flex items-center">
-                See all <span class="ml-1"><i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Porsche Cayenne 2020</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$400<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/maserati.webp"?>  alt="Maserati Levante 2021" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Maserati Levante 2021</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$500<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/bentley.webp" ?> alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Bentley Flying Spur 2019</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$700<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- OffRoad Cars -->
-    <section class="bg-white py-12">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-secondary">Sport Cars</h2>
-            <a href="#" class="text-primary font-medium hover:underline flex items-center">
-                See all <span class="ml-1"><i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/porsche.webp" ?> alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Porsche Cayenne 2020</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$400<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/maserati.webp"?>  alt="Maserati Levante 2021" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Maserati Levante 2021</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$500<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src=<?= ASSETSROOT . "images/bentley.webp" ?> alt="Bentley Flying Spur 2019" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Bentley Flying Spur 2019</h3>
-                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                        <span class="text-yellow-500">&#9733;</span>
-                        4.8 (2,436 Reviews)
-                    </p>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
-                        <span class="mr-1">&#x1F4CD;</span> Hoan Kiem district, Ha Noi city
-                    </p>
-                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>4 seats</span>
-                        <span>Gas</span>
-                        <span>Auto</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-bold text-secondary">$700<span class="text-sm font-medium">/day</span></p>
-                        <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    <?php
+        }    
+    ?>
 
     <a href="#" class="bg-primary mx-auto block w-fit text-white px-3 py-2 rounded-lg font-semibold">Explore All Cars</a>
 

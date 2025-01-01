@@ -3,6 +3,8 @@
     {
         public function index()
         {
-            $this->render("/");
+            $categoriesWithVehicles = Vehicle::getTopVehiclesByCategory();
+            
+            $this->render("/", compact("categoriesWithVehicles"));
         }
     }
