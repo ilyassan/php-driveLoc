@@ -66,9 +66,9 @@
         return new self($result->id, $result->name, $result->model, $result->seats, $result->price, $result->type_id, $result->category_id);
     }
     
-    public static function all()
+    public static function all($filters = [])
     {
-        $sql =  "SELECT v.*,
+        $sql = "SELECT v.*,
                         AVG(r.rate) as rating,
                         COUNT(r.rate) as rates_count,
                         c.name as category,
@@ -77,17 +77,44 @@
                 JOIN types t ON v.type_id = t.id
                 JOIN categories c ON v.category_id = c.id
                 LEFT JOIN ratings r ON v.id = r.vehicle_id
-                GROUP BY v.id
-                ORDER BY rating
-                ";
+                WHERE 1=1 ";
+    
+        if (isset($filters['name']) && !empty($filters['name'])) {
+            $sql .= " AND v.name LIKE :name ";
+        }
+        if (isset($filters['category_id']) && !empty($filters['category_id'])) {
+            $sql .= " AND v.category_id = :category_id ";
+        }
+        if (isset($filters['min_price']) && !empty($filters['min_price'])) {
+            $sql .= " AND v.price >= :min_price ";
+        }
+        if (isset($filters['max_price']) && !empty($filters['max_price'])) {
+            $sql .= " AND v.price <= :max_price ";
+        }
+    
+        $sql .= " GROUP BY v.id ORDER BY rating DESC";
+    
         self::$db->query($sql);
+    
+        if (isset($filters['name']) && !empty($filters['name'])) {
+            self::$db->bind(':name', '%' . $filters['name'] . '%');
+        }
+        if (isset($filters['category_id']) && !empty($filters['category_id'])) {
+            self::$db->bind(':category_id', $filters['category_id']);
+        }
+        if (isset($filters['min_price']) && !empty($filters['min_price'])) {
+            self::$db->bind(':min_price', $filters['min_price']);
+        }
+        if (isset($filters['max_price']) && !empty($filters['max_price'])) {
+            self::$db->bind(':max_price', $filters['max_price']);
+        }
+    
         self::$db->execute();
-
+    
         $result = self::$db->results();
-
-        return $result;  
+    
+        return $result;
     }
-
 
     public static function getTopVehiclesByCategory()
     {
