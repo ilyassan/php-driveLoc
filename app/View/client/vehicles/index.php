@@ -9,46 +9,49 @@
     </div>
 
     <!-- Filter Bar -->
-    <div id="filter" class="bg-white shadow-lg p-6 rounded-lg mb-8">
+    <form id="filter" class="bg-white shadow-lg p-6 rounded-lg mb-8">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
 
             <!-- Car Name Search -->
             <div class="flex items-center border border-gray-300 rounded-md px-4 py-2">
                 <i class="fas fa-car text-gray-500"></i>
-                <input type="text" placeholder="Search by name" class="ml-2 text-gray-500 focus:outline-none w-full" />
+                <input id="name" autocomplete="off" type="text" name="name" placeholder="Search by name" class="ml-2 text-gray-500 focus:outline-none w-full" />
             </div>
 
-            <!-- Number of Seats (Custom Dropdown) -->
+            <!-- Categories (Custom Dropdown) -->
             <div class="relative">
+                <input id="category_id" type="hidden" name="category_id" value="">
                 <button
-                    id="seatsDropdown"
+                    type="button"
+                    id="categoriesDropdown"
                     class="flex items-center border border-gray-300 rounded-md px-4 py-2 w-full bg-white text-gray-500 focus:outline-none"
                 >
-                    <i class="fas fa-chair text-gray-500 mr-2"></i>
-                    <span id="selectedSeats">Seats</span>
+                    <i class="fas fa-layer-group text-gray-500 mr-2"></i>
+                    <span id="selectedCategories">Categories</span>
                     <i class="fas fa-chevron-down ml-auto text-gray-400"></i>
                 </button>
                 <!-- Dropdown Options -->
                 <ul
-                    id="seatsDropdownMenu"
+                    id="categoriesDropdownMenu"
                     class="absolute dropdown-menu hidden bg-white shadow-md rounded-md w-full mt-2 z-10"
                 >
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('seatsDropdown', 'selectedSeats', '2')">2</li>
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('seatsDropdown', 'selectedSeats', '4')">4</li>
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('seatsDropdown', 'selectedSeats', '6+')">6+</li>
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', 'All')">All</li>
+                    <?php foreach ($categories as $category): ?>
+                        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', '<?= $category->getName() ?>', '<?= $category->getId() ?>')"><?= $category->getName() ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
             
             <!-- Min Price -->
             <div class="flex items-center border border-gray-300 rounded-md px-4 py-2">
                 <i class="fas fa-dollar-sign text-gray-500"></i>
-                <input type="number" placeholder="Min Price" class="ml-2 text-gray-500 focus:outline-none w-full" />
+                <input id="min_price" type="number" name="min_price" placeholder="Min Price" class="ml-2 text-gray-500 focus:outline-none w-full" />
             </div>
 
             <!-- Max Price -->
             <div class="flex items-center border border-gray-300 rounded-md px-4 py-2">
                 <i class="fas fa-dollar-sign text-gray-500"></i>
-                <input type="number" placeholder="Max Price" class="ml-2 text-gray-500 focus:outline-none w-full" />
+                <input id="max_price" type="number" name="max_price" placeholder="Max Price" class="ml-2 text-gray-500 focus:outline-none w-full" />
             </div>
         </div>
 
@@ -56,11 +59,12 @@
         <button class="flex items-center gap-2 w-fit mx-auto mt-4 px-6 py-1.5 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-red-600">
             Search <i class="fa-solid fa-search"></i>
         </button>
-    </div>
+    </form>
 
 
     <!-- Vehicle Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="alert" class="text-center py-12"></div>
+    <div id="vehicles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($vehicles as $vehicle): ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Car Image" class="w-full h-48 object-cover">
@@ -109,7 +113,8 @@
         menu.classList.toggle('hidden');
     }
 
-    function selectOption(dropdownId, labelId, value) {
+    function selectOption(dropdownId, labelId, value, id = '') {
+        document.getElementById("category_id").value = id;
         document.getElementById(labelId).innerText = value;
         document.getElementById(`${dropdownId}Menu`).classList.add('hidden');
     }
@@ -121,12 +126,92 @@
     }
 
     // Event listeners for dropdown toggles
-    document.getElementById('seatsDropdown').addEventListener('click', function (event) {
+    document.getElementById('categoriesDropdown').addEventListener('click', function (event) {
         event.stopPropagation();
-        toggleDropdown('seatsDropdown', 'seatsDropdownMenu');
+        toggleDropdown('categoriesDropdown', 'categoriesDropdownMenu');
     });
 
     document.addEventListener('click', function () {
         closeAllDropdowns();
     });
+
+    document.getElementById("filter").onsubmit = async function (e){
+        e.preventDefault();
+        
+        let name = document.getElementById("name").value;
+        let categoryId = document.getElementById("category_id").value;
+        let minPrice = document.getElementById("min_price").value;
+        let maxPrice = document.getElementById("max_price").value;
+
+        let res = await fetch("<?= URLROOT . 'api/vehicles'?>",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                name,
+                                category_id: categoryId,
+                                min_price: minPrice,
+                                max_price: maxPrice
+                            })
+                        });
+        let filteredVehicles = (await res.json()).data;
+        
+        const vehicleCardsContainer = document.getElementById('vehicles');
+
+        vehicleCardsContainer.innerHTML = '';
+        document.getElementById("alert").innerHTML = '';
+        
+        if (filteredVehicles.length == 0) {
+            document.getElementById("alert").innerHTML = `
+                    <i class="fa-solid fa-car-burst text-6xl text-gray-400 mb-6"></i>
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Cars Available</h2>
+                    <p class="text-gray-500">Sorry, we couldn't find any cars matching your criteria. Please try adjusting your filters.</p>
+            `;
+            return;
+        }
+        filteredVehicles.forEach(vehicle => {
+            const cardHTML = `
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Car Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-secondary">${vehicle.name}</h3>
+                        <p class="text-gray-500 text-sm">${vehicle.category}</p>
+                        <p class="text-gray-500 text-sm mb-0.5">Seats: ${vehicle.seats}</p>
+                        <p class="text-sm text-gray-500 mb-2 flex items-center"><i class="fas ${vehicle.type === "Gas" ? "fa-gas-pump" : "fa-car-battery"} text-gray-500 mr-1"></i> ${vehicle.type}</p>
+                        <div class="mt-2">
+                            <span class="text-primary font-bold">$${vehicle.price}/ Day</span>
+                        </div>
+                        <div class="mt-2 flex items-center text-sm text-yellow-400">
+                            ${renderRatingStars(vehicle.rating)}
+                            <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating).toFixed(2)})</span>
+                        </div>
+                        <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            `;
+            vehicleCardsContainer.innerHTML += cardHTML;
+        });
+    }
+
+    function renderRatingStars(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = (rating - fullStars) >= 0.5;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        let starsHTML = '';
+
+        for (let i = 0; i < fullStars; i++) {
+            starsHTML += '<i class="fas fa-star"></i>';
+        }
+        if (hasHalfStar) {
+            starsHTML += '<i class="fas fa-star-half-alt"></i>';
+        }
+        for (let i = 0; i < emptyStars; i++) {
+            starsHTML += '<i class="far fa-star"></i>';
+        }
+        return starsHTML;
+    }
 </script>
