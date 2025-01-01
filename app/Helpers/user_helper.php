@@ -21,7 +21,7 @@
                 return $cachedUser;
             }else {
                 unset($_SESSION["user_id"]);
-                redirect("users/login");
+                redirect("auth/login");
             }
         }
 

@@ -52,6 +52,10 @@
                     flash('error', 'Email or password incorrect!');
                     redirect("login");
                 }
+
+                $user->createSession();
+                flash("success", "Logged in successfully :)");
+                redirect("");
             }
             else{
                 // Load view with errors

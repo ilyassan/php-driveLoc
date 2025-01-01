@@ -17,10 +17,18 @@
                 $path = "/" . $path;
             }
 
-            $path = APPROOT . "View" . $path . ".php";
+            if (isLoggedIn()) {
+                if (user()->isAdmin()) {
+                    $path = APPROOT . "View/admin" . $path . ".php";
+                }else{
+                    $path = APPROOT . "View/client" . $path . ".php";
+                }
+            }else{
+                $path = APPROOT . "View" . $path . ".php";
+            }
 
             $role = "client";
-            if (isLoggedIn()) {
+            if (isLoggedIn() && user()->isAdmin()) {
                 $role = "admin";
             }
             

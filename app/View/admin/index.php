@@ -1,4 +1,3 @@
-<?php include("./inc/header.php") ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <section>
@@ -209,5 +208,3 @@
         }
     });
 </script>
-
-<?php include("./inc/footer.php") ?>
