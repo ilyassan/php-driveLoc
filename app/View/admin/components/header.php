@@ -74,12 +74,12 @@
         </nav>
 
         <!-- Logout Button -->
-        <div class="absolute bottom-4 w-full px-4">
+        <form action="<?= URLROOT . "logout" ?>" method="POST" class="absolute bottom-4 w-full px-4">
             <button class="flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg w-full">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </button>
-        </div>
+        </form>
     </aside>
 
     <!-- Main Content -->
