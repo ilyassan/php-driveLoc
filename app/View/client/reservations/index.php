@@ -61,6 +61,7 @@
                         <div>
                             <h3 class="text-lg font-bold text-secondary"><?= $reservation["vehicle_name"] ?></h3>
                             <p class="text-gray-500 text-sm"><?= $reservation["category_name"] ?></p>
+                            <p class="text-gray-500 text-sm">Location: <?= $reservation["place_name"] ?></p>
                         </div>
                         <span class="px-3 py-1 rounded-full text-sm font-semibold
                             <?php
@@ -101,7 +102,7 @@
                             <p class="text-gray-500 text-sm">Duration</p>
                             <?php
                                 $diff = $pickupDate->diff($returnDate);
-                                $duration = $diff->days;
+                                $duration = $diff->days + 1;
                             ?>
                             <p class="font-semibold"><?php echo $duration; ?> Days</p>
                         </div>
@@ -219,6 +220,7 @@
                             <div>
                                 <h3 class="text-lg font-bold text-secondary">${reservation.vehicle_name}</h3>
                                 <p class="text-gray-500 text-sm">${reservation.category_name}</p>
+                                <p class="text-gray-500 text-sm">Location: ${reservation.place_name}</p>
                             </div>
                             <span class="px-3 py-1 rounded-full text-sm font-semibold ${statusClass}">
                                 ${statusText}
@@ -237,7 +239,7 @@
                             </div>
                             <div>
                                 <p class="text-gray-500 text-sm">Duration</p>
-                                <p class="font-semibold">${Math.ceil((returnDate - pickupDate) / (1000 * 60 * 60 * 24))} Days</p>
+                                <p class="font-semibold">${Math.ceil((returnDate - pickupDate) / (1000 * 60 * 60 * 24)) + 1} Days</p>
                             </div>
                             <div>
                                 <p class="text-gray-500 text-sm">Total Cost</p>

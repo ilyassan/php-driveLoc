@@ -70,7 +70,10 @@
                 GROUP BY v.id";
         self::$db->query($sql);
         self::$db->bind(':id', $id);
-        self::$db->execute();
+
+        if (! self::$db->execute()) {
+            return false;
+        }
 
 
         $result = self::$db->single();
