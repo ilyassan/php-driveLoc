@@ -8,14 +8,14 @@
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-xs font-medium text-gray-500">Monthly Profit</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-2">$24,500</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-2">$<?= $monthProfit ?></h3>
                 </div>
-                <div class="bg-primary/10 p-3 rounded-lg">
-                    <i class="fas fa-dollar-sign text-primary text-xl"></i>
+                <div class="bg-green-100 p-3 rounded-lg">
+                    <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
                 </div>
             </div>
-            <span class="text-sm font-medium text-green-600 flex items-center gap-1 mt-1">
-                <i class="fas fa-arrow-up text-xs"></i> 12.5% from last month
+            <span class="text-sm font-medium <?= $ratioProfit > 0 ? 'text-green-600' : 'text-red-600' ?> flex items-center gap-1 mt-1">
+                <i class="fas fa-arrow-<?= $ratioProfit > 0 ? 'up' : 'down' ?> text-xs"></i> <?= number_format($ratioProfit, 2) ?>% from last month
             </span>
         </div>
 
@@ -24,14 +24,14 @@
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-xs font-medium text-gray-500">Monthly Reservations</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-2">156</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-2"><?= $monthReservations ?></h3>
                 </div>
                 <div class="bg-blue-50 p-3 rounded-lg">
                     <i class="fas fa-calendar-check text-blue-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-sm font-medium text-green-600 flex items-center gap-1 mt-1">
-                <i class="fas fa-arrow-up text-xs"></i> 8.2% from last month
+            <span class="text-sm font-medium <?= $diffReservations > 0 ? 'text-green-600' : 'text-red-600' ?> flex items-center gap-1 mt-1">
+                <i class="fas fa-arrow-<?= $diffReservations > 0 ? 'up' : 'down' ?> text-xs"></i> <?= $diffReservations ?> from last month
             </span>
         </div>
 
@@ -40,14 +40,14 @@
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-xs font-medium text-gray-500">Total Clients</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-2">2,450</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-2"><?= $usersCount ?></h3>
                 </div>
                 <div class="bg-purple-50 p-3 rounded-lg">
                     <i class="fas fa-users text-purple-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-sm font-medium text-green-600 flex items-center gap-1 mt-1">
-                <i class="fas fa-arrow-up text-xs"></i> 4.6% from last month
+            <span class="text-sm font-medium text-gray-600 flex items-center gap-1 mt-1">
+                Total registred clients
             </span>
         </div>
 

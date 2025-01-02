@@ -102,6 +102,17 @@ class User extends BaseClass
         }
     }
 
+    public static function count()
+    {
+        $sql = "SELECT COUNT(*) as count FROM users WHERE role_id = :role_id";
+        self::$db->query($sql);
+        self::$db->bind(':role_id', self::$clientRoleId);
+        self::$db->execute();
+        $result = self::$db->single();
+
+        return $result->count;
+    }
+
     public function createSession()
     {
         $_SESSION['user_id'] = $this->id;
