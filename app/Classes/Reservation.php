@@ -2,17 +2,17 @@
     class Reservation extends BaseClass {
 
     private $id;
-    private $pickup_date;
-    private $return_date;
+    private $from_date;
+    private $to_date;
     private $place_id;
     private $vehicle_id;
     private $client_id;
 
-    public function __construct($id, $pickup_date, $return_date, $place_id, $vehicle_id, $client_id)
+    public function __construct($id, $from_date, $to_date, $place_id, $vehicle_id, $client_id)
     {
         $this->id = $id;
-        $this->pickup_date = $pickup_date;
-        $this->return_date = $return_date;
+        $this->from_date = $from_date;
+        $this->to_date = $to_date;
         $this->place_id = $place_id;
         $this->vehicle_id = $vehicle_id;
         $this->client_id = $client_id;
@@ -25,12 +25,12 @@
 
     public function getPickupDate()
     {
-        return $this->pickup_date;
+        return $this->from_date;
     }
 
     public function getReturnDate()
     {
-        return $this->return_date;
+        return $this->to_date;
     }
 
     public function getPlaceId()
@@ -46,6 +46,25 @@
     public function getClientId()
     {
         return $this->client_id;
+    }
+
+    public function save()
+    {
+        $sql = "INSERT INTO reservations (from_date, to_date, place_id, vehicle_id, client_id) 
+                VALUES (:from_date, :to_date, :place_id, :vehicle_id, :client_id)";
+
+        self::$db->query($sql);
+        self::$db->bind(':from_date', $this->from_date);
+        self::$db->bind(':to_date', $this->to_date);
+        self::$db->bind(':place_id', $this->place_id);
+        self::$db->bind(':vehicle_id', $this->vehicle_id);
+        self::$db->bind(':client_id', $this->client_id);
+
+        if (self::$db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function find(int $id) {
@@ -76,10 +95,12 @@
             $sql = "SELECT r.*,
                            v.name AS vehicle_name,
                            c.name AS category_name,
-                           v.price * (DATEDIFF(r.to_date, r.from_date) + 1) AS total_cost
+                           v.price * (DATEDIFF(r.to_date, r.from_date) + 1) AS total_cost,
+                           p.name as place_name
                     FROM reservations r
                     JOIN vehicles v ON r.vehicle_id = v.id
                     JOIN categories c ON v.category_id = c.id
+                    JOIN places p ON r.place_id = p.id
                     WHERE r.client_id = :client_id ";
     
             if (isset($filters['status']) && $filters['status'] !== 'All Status' && !empty($filters['status'])) {
@@ -120,6 +141,27 @@
             $results = self::$db->results();
     
             return $results;
+    }
+
+
+    public static function isVehicleReserved($vehicleId, $fromDate, $toDate)
+    {
+        $sql = "SELECT 1 FROM reservations
+                WHERE vehicle_id = :vehicle_id
+                  AND (
+                  (:from_date BETWEEN from_date AND to_date)
+                  OR
+                  (:to_date BETWEEN from_date AND to_date)
+                  );";
+
+        self::$db->query($sql);
+        self::$db->bind(':vehicle_id', $vehicleId);
+        self::$db->bind(':from_date', $fromDate);
+        self::$db->bind(':to_date', $toDate);
+
+        self::$db->execute();
+
+        return self::$db->rowCount() > 0;
     }
 
 }

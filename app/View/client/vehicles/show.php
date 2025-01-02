@@ -41,17 +41,18 @@
 
             <!-- Date Range Inputs -->
             <div class="mt-8">
-                <form>
+                <form action="<?= URLROOT . 'vehicles/reservate/' . $vehicle->getId() ?>" method="POST">
+                    <input type="hidden" name="vehicle_id" value="<?= $vehicle->getId() ?>">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <!-- From Date -->
                         <div>
                             <label for="fromDate" class="block text-gray-600 font-semibold mb-2">From Date:</label>
-                            <input placeholder="YYYY-MM-DD" type="date" id="fromDate" name="fromDate" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <input placeholder="YYYY-MM-DD" type="date" id="fromDate" name="from_date" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         </div>
                         <!-- To Date -->
                         <div>
                             <label for="toDate" class="block text-gray-600 font-semibold mb-2">To Date:</label>
-                            <input placeholder="YYYY-MM-DD" type="date" id="toDate" name="toDate" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <input placeholder="YYYY-MM-DD" type="date" id="toDate" name="to_date" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         </div>
 
                         <!-- Location (Custom Dropdown) -->
