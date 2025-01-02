@@ -25,6 +25,7 @@
     $router->add('GET', '/reservations', 'ReservationsPage@index', "client");
 
     $router->add('POST', '/api/vehicles', 'VehiclesPage@getFilteredVehicles');
+    $router->add('POST', '/api/getReservations', 'ReservationsPage@getFilteredReservations');
 
     $router->add('GET', '/', 'DashboardPage@index', "admin");
 
