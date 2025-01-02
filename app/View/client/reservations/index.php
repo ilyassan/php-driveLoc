@@ -1,5 +1,3 @@
-<?php include("./inc/header.php") ?>
-
 <section class="container bg-gray-50 py-10">
     <!-- Hero Section -->
     <div class="text-center mb-10">
@@ -51,47 +49,71 @@
 
     <!-- Reservation Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <?php for ($i = 0; $i < 4; $i++): ?>
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="p-6">
-                <!-- Reservation Header -->
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-lg font-bold text-secondary">Porsche 911 GT3</h3>
-                        <p class="text-gray-500 text-sm">Reservation #REF<?php echo sprintf('%04d', $i+1); ?></p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-sm font-semibold
-                        <?php echo $i % 3 == 0 ? 'bg-yellow-100 text-yellow-800' : 
-                               ($i % 3 == 1 ? 'bg-green-100 text-green-800' : 
-                               'bg-gray-100 text-gray-800'); ?>">
-                        <?php echo $i % 3 == 0 ? 'Upcoming' : 
-                               ($i % 3 == 1 ? 'Active' : 
-                               'Completed'); ?>
-                    </span>
-                </div>
+        <?php if (empty($reservations)): ?>
+            <p class="text-gray-600 text-center">No reservations found.</p>
+        <?php else: ?>
+            <?php foreach ($reservations as $reservation): ?>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <!-- Reservation Header -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-secondary"><?= $reservation["vehicle_name"] ?></h3>
+                            <p class="text-gray-500 text-sm"><?= $reservation["category_name"] ?></p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-sm font-semibold
+                            <?php
+                            $pickupDate = new DateTime($reservation["from_date"]);
+                            $returnDate = new DateTime($reservation["to_date"]);
+                            $now = new DateTime();
 
-                <!-- Reservation Details -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-gray-500 text-sm">Pickup Date</p>
-                        <p class="font-semibold">Dec 15, 2024</p>
+                            $statusClass = '';
+                            $statusText = '';
+
+                            if ($pickupDate > $now) {
+                                $statusClass = 'bg-yellow-100 text-yellow-800';
+                                $statusText = 'Upcoming';
+                            } elseif ($pickupDate <= $now && $returnDate >= $now) {
+                                $statusClass = 'bg-green-100 text-green-800';
+                                $statusText = 'Active';
+                            } else {
+                                $statusClass = 'bg-gray-100 text-gray-800';
+                                $statusText = 'Completed';
+                            }
+                            echo $statusClass;
+                            ?>">
+                            <?php echo $statusText; ?>
+                        </span>
                     </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Return Date</p>
-                        <p class="font-semibold">Dec 20, 2024</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Duration</p>
-                        <p class="font-semibold">5 Days</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Total Cost</p>
-                        <p class="font-semibold text-primary">$1,250.00</p>
+
+                    <!-- Reservation Details -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-gray-500 text-sm">Pickup Date</p>
+                            <p class="font-semibold"><?php echo (new DateTime($reservation["from_date"]))->format('M j, Y'); ?></p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Return Date</p>
+                            <p class="font-semibold"><?php echo (new DateTime($reservation["to_date"]))->format('M j, Y'); ?></p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Duration</p>
+                            <?php
+                                $diff = $pickupDate->diff($returnDate);
+                                $duration = $diff->days;
+                            ?>
+                            <p class="font-semibold"><?php echo $duration; ?> Days</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Total Cost</p>
+                            <!-- You'll likely need to fetch the total cost associated with this reservation -->
+                            <p class="font-semibold text-primary">$<?= $reservation["total_cost"] ?></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <?php endfor; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -136,5 +158,3 @@
         closeAllDropdowns();
     });
 </script>
-
-<?php include("./inc/footer.php") ?>
