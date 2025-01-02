@@ -52,7 +52,7 @@ CREATE TABLE vehicles(
     name VARCHAR(255),
     model VARCHAR(4),
     seats INT NOT NULL,
-    price_per_day DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
     type_id INT,
     category_id INT,
     PRIMARY KEY(id),
@@ -89,7 +89,7 @@ SELECT
     v.name AS vehicle_name,
     v.model AS vehicle_model,
     v.seats AS vehicle_seats,
-    v.price_per_day AS daily_price,
+    v.price AS daily_price,
     c.name AS category_name,
     t.name AS vehicle_type,
     AVG(r.rate) AS average_rating,
@@ -127,7 +127,7 @@ INSERT INTO roles (name) VALUES ('client'), ('admin');
 
 -- Seeding users
 INSERT INTO users (first_name, last_name, email, password_hash, role_id) VALUES
-('Admin', 'User', 'admin@example.com', 'hashed_admin_password', 2),
+('Admin', 'User', 'admin@example.com', '$2y$10$aAhj2MDgUweotrurnsCMGeh8PQJ26E0N2l2MnOxAUR5nxpUt3J5yu', 2),
 ('Ali', 'El Idrissi', 'ali.elidrissi@example.com', 'hashed_password_1', 1),
 ('Sara', 'Benzakour', 'sara.benzakour@example.com', 'hashed_password_2', 1),
 ('Kamal', 'El Mouden', 'kamal.elmouden@example.com', 'hashed_password_3', 1),
@@ -138,7 +138,8 @@ INSERT INTO users (first_name, last_name, email, password_hash, role_id) VALUES
 ('Noura', 'Zaidi', 'noura.zaidi@example.com', 'hashed_password_8', 1),
 ('Omar', 'Chakib', 'omar.chakib@example.com', 'hashed_password_9', 1),
 ('Imane', 'Tazi', 'imane.tazi@example.com', 'hashed_password_10', 1),
-('Karim', 'Mezouar', 'karim.mezouar@example.com', 'hashed_password_11', 1);
+('Karim', 'Mezouar', 'karim.mezouar@example.com', 'hashed_password_11', 1),
+('Ilyass', 'Anida', 'x@gmail.com', '$2y$10$aAhj2MDgUweotrurnsCMGeh8PQJ26E0N2l2MnOxAUR5nxpUt3J5yu', 1);
 
 -- Seeding places (Moroccan cities)
 INSERT INTO places (name) VALUES
@@ -160,7 +161,7 @@ INSERT INTO types (name) VALUES
 ('Gas'), ('Electric');
 
 -- Seeding vehicles
-INSERT INTO vehicles (name, model, seats, price_per_day, type_id, category_id) VALUES
+INSERT INTO vehicles (name, model, seats, price, type_id, category_id) VALUES
 ('Toyota Corolla', '2020', 5, 50.00, 1, 1),
 ('Tesla Model S', '2022', 5, 120.00, 2, 1),
 ('Ford Mustang', '2021', 4, 150.00, 1, 4),
@@ -177,13 +178,13 @@ INSERT INTO reservations (from_date, to_date, place_id, vehicle_id, client_id) V
 ('2024-12-01', '2024-12-03', 1, 1, 1),
 ('2024-12-04', '2024-12-06', 2, 2, 2),
 ('2024-12-07', '2024-12-10', 3, 3, 3),
-('2024-12-11', '2024-12-13', 4, 4, 4),
+('2025-01-11', '2025-01-15', 4, 4, 13),
 ('2024-12-14', '2024-12-16', 5, 5, 5),
 ('2024-12-17', '2024-12-19', 6, 6, 6),
 ('2024-12-20', '2024-12-22', 7, 7, 7),
-('2024-12-23', '2024-12-25', 8, 8, 8),
+('2024-12-23', '2024-12-25', 8, 8, 13),
 ('2024-12-26', '2024-12-28', 9, 9, 9),
-('2024-12-29', '2024-12-31', 10, 10, 10);
+('2024-12-29', '2025-01-05', 10, 10, 13);
 
 -- Seeding ratings
 INSERT INTO ratings (rate, vehicle_id, client_id) VALUES

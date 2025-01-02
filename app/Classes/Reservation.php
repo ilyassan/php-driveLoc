@@ -164,4 +164,54 @@
         return self::$db->rowCount() > 0;
     }
 
+
+    public static function getReservationsCostBetween($startDate, $endDate)
+    {
+        $sql = "SELECT SUM(v.price * (DATEDIFF(r.to_date, r.from_date) + 1)) AS total_cost
+                FROM reservations r
+                JOIN vehicles v ON r.vehicle_id = v.id
+                WHERE r.from_date >= :start_date
+                AND r.from_date <= :end_date";
+    
+        self::$db->query($sql);
+        self::$db->bind(':start_date', $startDate);
+        self::$db->bind(':end_date', $endDate);
+    
+        if (!self::$db->execute()) {
+            return false;
+        }
+    
+        $result = self::$db->single();
+    
+        if ($result && isset($result->total_cost)) {
+            return $result->total_cost;
+        } else {
+            return 0;
+        }
+    }
+
+    public static function getReservationsCount($startDate, $endDate)
+    {
+        $sql = "SELECT COUNT(*) AS total_reservations
+                FROM reservations
+                WHERE from_date >= :start_date
+                AND from_date <= :end_date";
+    
+        self::$db->query($sql);
+        self::$db->bind(':start_date', $startDate);
+        self::$db->bind(':end_date', $endDate);
+    
+        if (!self::$db->execute()) {
+            return false;
+        }
+    
+        $result = self::$db->single();
+    
+        if ($result && isset($result->total_reservations)) {
+            return $result->total_reservations;
+        } else {
+            return 0;
+        }
+    }
+
 }
