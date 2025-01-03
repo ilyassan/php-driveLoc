@@ -30,6 +30,8 @@
 
     $router->add('GET', '/', 'DashboardPage@index', "admin");
     $router->add('GET', '/vehicles', 'VehiclesAdminPage@index', "admin");
+    $router->add('GET', '/vehicles/create', 'VehiclesAdminPage@create', "admin");
+    $router->add('POST', '/vehicles/store', 'VehiclesAdminPage@store', "admin");
 
     $router->add('GET', '/signup', 'SignupPage@index');
     $router->add('POST', '/signup', 'SignupPage@signup');
