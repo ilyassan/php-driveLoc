@@ -174,7 +174,7 @@
                         </div>
                         <div class="mt-2 flex items-center text-sm text-yellow-400">
                             ${renderRatingStars(vehicle.rating)}
-                            <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating).toFixed(2)})</span>
+                            <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating || 0).toFixed(2)})</span>
                         </div>
                         <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
                             View Details

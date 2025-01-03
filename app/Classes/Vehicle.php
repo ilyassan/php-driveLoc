@@ -62,6 +62,23 @@
         return $this->rating;
     }
 
+    public function save()
+    {
+        $sql = "INSERT INTO vehicles (name, model, seats, price, type_id, category_id)
+                VALUES (:name, :model, :seats, :price, :type_id, :category_id)
+                ";
+        self::$db->query($sql);
+        self::$db->bind(':name', $this->name);
+        self::$db->bind(':model', $this->model);
+        self::$db->bind(':seats', $this->seats);
+        self::$db->bind(':price', $this->price);
+        self::$db->bind(':type_id', $this->type_id);
+        self::$db->bind(':category_id', $this->category_id);
+
+        return self::$db->execute();
+    }
+
+
     public static function find(int $id) {
         $sql = "SELECT v.*, AVG(r.rate) as rating
                 FROM vehicles v

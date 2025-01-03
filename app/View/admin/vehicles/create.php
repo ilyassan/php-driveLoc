@@ -1,7 +1,5 @@
-<?php include("./inc/header.php"); ?>
-
 <div class="container mx-auto py-6">
-    <form action="" method="POST" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-6">
+    <form action="<?= URLROOT . "vehicles/store" ?>" method="POST" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-6">
         <div class="flex justify-center mb-4">
             <div class="flex relative justify-center w-80 h-60">
                 <img id="menu-image" class="border-2 border-gray-300 rounded-lg w-full h-full" src="../../assets/images/dishes/23808324.jpg" alt="Menu">
@@ -13,24 +11,25 @@
             <!-- Vehicle Name -->
             <div>
                 <label for="vehicle_name" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Name</label>
-                <input type="text" id="vehicle_name" name="vehicle_name" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Porsche" required />
+                <input autocomplete="off" type="text" id="vehicle_name" name="vehicle_name" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Porsche"  />
             </div>
 
             <!-- Vehicle Model -->
             <div>
                 <label for="vehicle_model" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Model</label>
-                <input type="text" id="vehicle_model" name="vehicle_model" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="911 GT3" required />
+                <input autocomplete="off" type="text" id="vehicle_model" name="vehicle_model" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="2024"  />
             </div>
 
            <!-- Category menu -->
            <div class="relative">
-                <label for="vehicle_model" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Category</label>
+                <input id="category_id" type="hidden" name="category_id" value="">
+                <label for="vehicle_category" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Category</label>
 
                 <span
                     id="categoriesDropdown"
                     class="flex items-center border border-gray-300 rounded-md px-4 py-2 w-full bg-gray-50 text-gray-500 focus:outline-none"
                 >
-                    <i class="fas fa-chair text-gray-500 mr-2"></i>
+                    <i class="fas fa-layer-group text-gray-500 mr-2"></i>
                     <span id="selectedCategories">Categories</span>
                     <i class="fas fa-chevron-down ml-auto text-gray-400"></i>
                 </span>
@@ -39,16 +38,40 @@
                     id="categoriesDropdownMenu"
                     class="absolute dropdown-menu hidden bg-white shadow-md rounded-md w-full mt-2 z-10"
                 >
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', 'Sports Cars')">Sports Cars</li>
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', 'OffRoad Cars')">OffRoad Cars</li>
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', 'Speed Cars')">Speed Cars</li>
+                    <?php foreach ($categories as $category): ?>
+                        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', '<?= $category->getName() ?>', 'category_id', '<?= $category->getId() ?>')"><?= $category->getName() ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <!-- Category menu -->
+           <div class="relative">
+                <input id="type_id" type="hidden" name="type_id" value="">
+                <label for="vehicle_type" class="block mb-2 text-sm font-medium text-gray-700">Vehicle Type</label>
+
+                <span
+                    id="typesDropdown"
+                    class="flex items-center border border-gray-300 rounded-md px-4 py-2 w-full bg-gray-50 text-gray-500 focus:outline-none"
+                >
+                    <i class="fas fa-tower-broadcast text-gray-500 mr-2"></i>
+                    <span id="selectedType">Types</span>
+                    <i class="fas fa-chevron-down ml-auto text-gray-400"></i>
+                </span>
+                <!-- Dropdown Options -->
+                <ul
+                    id="typesDropdownMenu"
+                    class="absolute dropdown-menu hidden bg-white shadow-md rounded-md w-full mt-2 z-10"
+                >
+                    <?php foreach ($types as $type): ?>
+                        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('typesDropdown', 'selectedType', '<?= $type->getName() ?>', 'type_id' ,'<?= $type->getId() ?>')"><?= $type->getName() ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
             <!-- Number of Seats -->
             <div>
                 <label for="seats" class="block mb-2 text-sm font-medium text-gray-700">Number of Seats</label>
-                <input type="number" id="seats" name="seats" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="4" required />
+                <input type="number" id="seats" name="seats" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="4"  />
             </div>
 
              <!-- Price per Day -->
@@ -58,7 +81,7 @@
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                        <span class="text-gray-500 text-sm">$</span>
                    </div>
-                   <input type="number" id="price_per_day" name="price_per_day" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-7" placeholder="250" required />
+                   <input type="number" id="price_per_day" name="price_per_day" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-7" placeholder="250" />
                  </div>
             </div>
         </div>
@@ -92,7 +115,8 @@
         menu.classList.toggle('hidden');
     }
 
-    function selectOption(dropdownId, labelId, value) {
+    function selectOption(dropdownId, labelId, value, inputId, id = '') {
+        document.getElementById(inputId).value = id;
         document.getElementById(labelId).innerText = value;
         document.getElementById(`${dropdownId}Menu`).classList.add('hidden');
     }
@@ -108,10 +132,12 @@
         event.stopPropagation();
         toggleDropdown('categoriesDropdown', 'categoriesDropdownMenu');
     });
+    document.getElementById('typesDropdown').addEventListener('click', function (event) {
+        event.stopPropagation();
+        toggleDropdown('typesDropdown', 'typesDropdownMenu');
+    });
 
     document.addEventListener('click', function () {
         closeAllDropdowns();
     });
 </script>
-
-<?php include("./inc/footer.php"); ?>
