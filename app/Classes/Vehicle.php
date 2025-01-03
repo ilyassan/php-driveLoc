@@ -127,6 +127,14 @@
         return self::$db->execute();
     }
 
+    public function delete()
+    {
+        $sql = "DELETE FROM vehicles WHERE id = :id";
+        self::$db->query($sql);
+        self::$db->bind(':id', $this->id);
+        self::$db->execute();
+    }
+
     public static function find(int $id) {
         $sql = "SELECT v.*, AVG(r.rate) as rating
                 FROM vehicles v

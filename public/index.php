@@ -35,6 +35,7 @@
     $router->add('POST', '/vehicles/store', 'VehiclesAdminPage@store', "admin");
     $router->add('GET', '/vehicles/edit/{id}', 'VehiclesAdminPage@edit', "admin");
     $router->add('POST', '/vehicles/update/{id}', 'VehiclesAdminPage@update', "admin");
+    $router->add('POST', '/vehicles/delete', 'VehiclesAdminPage@delete', "admin");
 
     $router->add('GET', '/categories', 'CategoriesAdminPage@index', "admin");
     $router->add('POST', '/categories/store', 'CategoriesAdminPage@store', "admin");
