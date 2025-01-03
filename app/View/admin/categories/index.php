@@ -66,7 +66,7 @@
                 
                 <!-- Delete Button -->
                 <button 
-                    onclick="confirmDelete('<?= $category->getId() ?>')"
+                    onclick="confirmDelete('<?= $category->getName() ?>', '<?= $category->getId() ?>')"
                     class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:text-red-600"
                 >
                     <i class="fas fa-times"></i>
@@ -90,12 +90,15 @@
             >
                 Cancel
             </button>
-            <button 
-                onclick="deleteCategory()"
-                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-                Delete
-            </button>
+            <form action="<?= URLROOT . 'categories/delete' ?>" method="POST">
+                <input id="category_id" type="hidden" name="category_id" value="">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                >
+                    Delete
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -103,8 +106,10 @@
 <script>
     let categoryToDelete = '';
 
-    function confirmDelete(category) {
+    function confirmDelete(category, id) {
         categoryToDelete = category;
+        document.getElementById('category_id').value = id;
+
         document.getElementById('categoryToDelete').textContent = category;
         document.getElementById('deleteModal').classList.remove('hidden');
         document.getElementById('deleteModal').classList.add('flex');
@@ -114,12 +119,7 @@
         document.getElementById('deleteModal').classList.remove('flex');
         document.getElementById('deleteModal').classList.add('hidden');
         categoryToDelete = '';
-    }
-
-    function deleteCategory() {
-        console.log('Deleting category:', categoryToDelete);
-        
-        closeDeleteModal();
+        document.getElementById('category_id').value = category;
     }
 
     document.getElementById('deleteModal').addEventListener('click', function(e) {

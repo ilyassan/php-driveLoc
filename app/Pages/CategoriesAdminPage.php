@@ -44,4 +44,17 @@
             flash("error", array_first_not_null_value($errors));
             redirect("categories");
         }
+
+        public function delete()
+        {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $id = $_POST['category_id'];
+            
+            $category = Category::find($id);
+            $category->delete();
+
+            flash("success", "Category removed successfully.");
+            redirect("categories");
+        }
+
     }

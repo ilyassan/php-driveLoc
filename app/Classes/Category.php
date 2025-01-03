@@ -28,6 +28,14 @@
         self::$db->execute();
     }
 
+    public function delete()
+    {
+        $sql = "DELETE FROM categories WHERE id = :id";
+        self::$db->query($sql);
+        self::$db->bind(':id', $this->id);
+        self::$db->execute();
+    }
+
 
     public static function find(int $id) {
         $sql = "SELECT * FROM categories
