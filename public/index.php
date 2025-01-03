@@ -38,6 +38,7 @@
 
     $router->add('GET', '/categories', 'CategoriesAdminPage@index', "admin");
     $router->add('POST', '/categories/store', 'CategoriesAdminPage@store', "admin");
+    $router->add('POST', '/categories/delete', 'CategoriesAdminPage@delete', "admin");
 
     $router->add('GET', '/signup', 'SignupPage@index');
     $router->add('POST', '/signup', 'SignupPage@signup');
