@@ -44,4 +44,21 @@
 
             echo json_encode(["success" => true]);
         }
+
+        public function deleteReservationRate()
+        {
+            $input = file_get_contents('php://input');
+            $data = json_decode($input, true);
+
+            $vehicleId = $data['vehicle_id'];
+            $clientId = user()->getId();
+
+            $rate = Rate::getRateOfClient($clientId, $vehicleId);
+
+            if ($rate) {
+                $rate->delete();
+            }
+
+            echo json_encode(["success" => true]);
+        }
     }

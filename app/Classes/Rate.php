@@ -64,6 +64,14 @@
         self::$db->execute();
     }
 
+    public function delete()
+    {
+        $sql = "DELETE FROM ratings WHERE id = :id";
+        self::$db->query($sql);
+        self::$db->bind(':id', $this->id);
+        self::$db->execute();
+    }
+
 
     public static function getRateOfClient($client_id, $vehicle_id)
     {
@@ -86,7 +94,7 @@
         self::$db->execute();
 
         $result = self::$db->single();
-        return new self($result->id, $result->name);
+        return $result ? new self($result->id, $result->rate, $result->client_id, $result->vehicle_id) : null;
     }
 
 }

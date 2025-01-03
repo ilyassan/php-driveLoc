@@ -26,9 +26,9 @@ class User extends BaseClass
         return $this->id;
     }
 
-    public function getUsername()
+    public function getName()
     {
-        return $this->username;
+        return $this->first_name . " " . $this->last_name;
     }
 
     public function getEmail()

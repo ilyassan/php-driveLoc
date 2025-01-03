@@ -116,7 +116,7 @@
                     <!-- Star Rating Section -->
                     <div class="mt-4">
                         <p class="text-gray-500 text-sm mb-2">Rate your experience:</p>
-                        <div class="flex items-center gap-5">
+                        <div class="flex items-center justify-between rating-area">
                             <div class="flex items-center space-x-1 rating-container" data-vehicle-id="<?= $reservation['vehicle_id'] ?>">
                                 <?php
                                     $fullStars = floor($reservation['rating']);
@@ -124,24 +124,24 @@
                                     $emptyStars = 5 - $fullStars - $halfStar;
 
                                     for ($i = 0; $i < $fullStars; $i++) {
-                                        echo '<i class="fas fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500" data-star="'. $i + 1 .'"></i>';
+                                        echo '<i class="fas fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. $i + 1 .'"></i>';
                                     }
                                     if ($halfStar) {
-                                        echo '<i class="fas fa-star-half-alt text-yellow-400 text-xl cursor-pointer hover:text-yellow-500" data-star="'. $fullStars + 1 .'"></i>';
+                                        echo '<i class="fas fa-star-half-alt text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. $fullStars + 1 .'"></i>';
                                     }
                                     for ($i = 0; $i < $emptyStars; $i++) {
-                                        echo '<i class="far fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500" data-star="'. $fullStars + $i + 1 .'"></i>';
+                                        echo '<i class="far fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. $fullStars + $i + 1 .'"></i>';
                                     }
                                 ?>
                             </div>
                             <?php if (!empty($reservation['rating'])): ?>
-                                <div class="text-xl">
-                                    <i class="fa-regular fa-trash-can text-primary"></i>
+                                <div class="delete-rating-container" data-vehicle-id="<?= $reservation['vehicle_id'] ?>">
+                                    <i class="fa-regular fa-trash-can text-primary text-xl cursor-pointer delete-rating-btn"></i>
                                 </div>
                             <?php endif; ?>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <?php endforeach; ?>
@@ -153,9 +153,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <!-- Include flatpickr JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-    // Initialize flatpickr
+<script>    // Initialize flatpickr
     flatpickr(".flatpickr", {
         dateFormat: "Y-m-d",
         altInput: true,
@@ -190,7 +188,7 @@
         closeAllDropdowns();
     });
 
-    document.getElementById('filterBtn').addEventListener('click', async function() {
+   document.getElementById('filterBtn').addEventListener('click', async function() {
         const selectedStatus = document.getElementById('selectedStatus').innerText;
         const startDate = document.getElementById('start_date').value;
         const endDate = document.getElementById('end_date').value;
@@ -225,7 +223,7 @@
         }
 
         filteredReservations.forEach(reservation => {
-            const pickupDate = new Date(reservation.from_date);
+             const pickupDate = new Date(reservation.from_date);
             const returnDate = new Date(reservation.to_date);
             const now = new Date();
             let statusClass = '';
@@ -239,7 +237,7 @@
                 statusText = 'Active';
             } else {
                 statusClass = 'bg-gray-100 text-gray-800';
-                $statusText = 'Completed';
+                statusText = 'Completed';
             }
 
             const cardHTML = `
@@ -277,40 +275,47 @@
                             </div>
                         </div>
 
-                        <!-- Star Rating Section -->
-                        <div class="mt-4">
+                         <!-- Star Rating Section -->
+                         <div class="mt-4">
                             <p class="text-gray-500 text-sm mb-2">Rate your experience:</p>
-                            <div class="flex items-center space-x-1 rating-container" data-vehicle-id="${reservation.vehicle_id}">
-                                ${Array.from({ length: 5 }, (_, index) => {
-                                    const starValue = index + 1;
-                                    const isFilled = starValue <= Math.floor(reservation.rating);
-                                    const hasHalf = starValue === Math.ceil(reservation.rating) && reservation.rating % 1 !== 0;
-                                    let iconClass = 'far fa-star';
-                                    if (isFilled) {
-                                        iconClass = 'fas fa-star text-yellow-400';
-                                    } else if (hasHalf) {
-                                        iconClass = 'fas fa-star-half-alt text-yellow-400';
-                                    }
-                                    return `
-                                        <i class="${iconClass} text-yellow-400 text-xl cursor-pointer hover:text-yellow-400" data-star="${starValue}"></i>
-                                    `;
-                                }).join('')}
+                            <div class="flex items-center justify-between rating-area">
+                                <div class="flex items-center space-x-1 rating-container" data-vehicle-id="${reservation.vehicle_id}">
+                                    ${Array.from({ length: 5 }, (_, index) => {
+                                        const starValue = index + 1;
+                                        const isFilled = starValue <= Math.floor(reservation.rating);
+                                        const hasHalf = starValue === Math.ceil(reservation.rating) && reservation.rating % 1 !== 0;
+                                        let iconClass = 'far fa-star';
+                                        if (isFilled) {
+                                            iconClass = 'fas fa-star text-yellow-400 star';
+                                        } else if (hasHalf) {
+                                            iconClass = 'fas fa-star-half-alt text-yellow-400 star';
+                                        }
+                                        return `
+                                            <i class="${iconClass} text-yellow-400 text-xl cursor-pointer hover:text-yellow-400 star" data-star="${starValue}"></i>
+                                        `;
+                                    }).join('')}
+                                </div>
+                                ${reservation.rating != null ? `
+                                <div class="delete-rating-container" data-vehicle-id="${reservation.vehicle_id}">
+                                        <i class="fa-regular fa-trash-can text-primary text-xl cursor-pointer delete-rating-btn"></i>
+                                </div>
+                                 ` : ''}
                             </div>
                         </div>
-
                     </div>
                 </div>
             `;
             reservationsContainer.innerHTML += cardHTML;
         });
         attachStarRatingListeners();
+        attachDeleteRatingListeners();
     });
 
     function attachStarRatingListeners() {
         document.querySelectorAll('.rating-container').forEach(container => {
-            const stars = container.querySelectorAll('.fa-star');
-            const vehicleId = container.getAttribute("data-vehicle-id");
-
+            const stars = container.querySelectorAll('.star');
+            const vehicleId = container.dataset.vehicleId;
+           const ratingArea = container.closest('.rating-area');
             stars.forEach(star => {
                 star.addEventListener('click', async function() {
                     const rating = parseInt(this.getAttribute("data-star"));
@@ -326,8 +331,16 @@
                             rating: rating
                         })
                     });
-                    console.log(await res.json())
                     
+                    if (!ratingArea.querySelector('.delete-rating-container')) {
+                        const deleteButtonHTML = `
+                            <div class="delete-rating-container" data-vehicle-id="${vehicleId}">
+                                <i class="fa-regular fa-trash-can text-primary text-xl cursor-pointer delete-rating-btn"></i>
+                            </div>
+                        `;
+                        ratingArea.insertAdjacentHTML('beforeend', deleteButtonHTML);
+                        attachDeleteRatingListeners();
+                        }    
                 });
             });
         });
@@ -338,14 +351,44 @@
             const starValue = parseInt(star.dataset.star);
             if (starValue <= rating) {
                 star.classList.remove('far');
-                star.classList.add('fas'); // Filled star color
+                star.classList.add('fas');
             } else {
                 star.classList.remove('fas');
-                star.classList.add('far'); // Empty star color
+                star.classList.add('far');
             }
         });
     }
 
+   function attachDeleteRatingListeners() {
+        document.querySelectorAll('.delete-rating-container').forEach(container => {
+            const deleteButton = container.querySelector('.delete-rating-btn');
+             const vehicleId = container.dataset.vehicleId;
+            const ratingContainer = container.closest('.rating-area').querySelector('.rating-container');
+
+            deleteButton.addEventListener('click', async function() {
+                const res = await fetch("<?= URLROOT . 'api/deleteRating'?>", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        vehicle_id: vehicleId
+                    })
+                });
+
+                // Reset the stars to empty
+               ratingContainer.innerHTML = Array.from({ length: 5 }, (_, index) => `
+                    <i class="far fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="${index + 1}"></i>
+                `).join('');
+                attachStarRatingListeners();
+                container.remove();
+            });
+        });
+    }
+
     // Attach initial listeners when the page loads
-    document.addEventListener('DOMContentLoaded', attachStarRatingListeners);
+    document.addEventListener('DOMContentLoaded', () => {
+        attachStarRatingListeners();
+        attachDeleteRatingListeners();
+    });
 </script>

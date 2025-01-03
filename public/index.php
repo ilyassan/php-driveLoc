@@ -28,6 +28,7 @@
     $router->add('POST', '/api/vehicles', 'VehiclesPage@getFilteredVehicles');
     $router->add('POST', '/api/getReservations', 'ReservationsPage@getFilteredReservations');
     $router->add('POST', '/api/rateReservation', 'ReservationsPage@rateReservationVehicle');
+    $router->add('POST', '/api/deleteRating', 'ReservationsPage@deleteReservationRate');
 
     $router->add('GET', '/', 'DashboardPage@index', "admin");
 
