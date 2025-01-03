@@ -62,6 +62,37 @@
         return $this->rating;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    public function setSeats($seats)
+    {
+        $this->seats = $seats;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function setCategoryId($category_id)
+    {
+        $this->category_id = $category_id;
+    }
+
+    public function setTypeId($type_id)
+    {
+        $this->type_id = $type_id;
+    }
+
+
     public function save()
     {
         $sql = "INSERT INTO vehicles (name, model, seats, price, type_id, category_id)
@@ -78,6 +109,23 @@
         return self::$db->execute();
     }
 
+    public function update()
+    {
+        $sql = "UPDATE vehicles
+                SET name = :name, model = :model, seats = :seats, price = :price, type_id = :type_id, category_id = :category_id
+                WHERE id = :id";
+
+        self::$db->query($sql);
+        self::$db->bind(':id', $this->id);
+        self::$db->bind(':name', $this->name);
+        self::$db->bind(':model', $this->model);
+        self::$db->bind(':seats', $this->seats);
+        self::$db->bind(':price', $this->price);
+        self::$db->bind(':type_id', $this->type_id);
+        self::$db->bind(':category_id', $this->category_id);
+
+        return self::$db->execute();
+    }
 
     public static function find(int $id) {
         $sql = "SELECT v.*, AVG(r.rate) as rating
