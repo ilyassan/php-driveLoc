@@ -37,6 +37,7 @@
     $router->add('POST', '/vehicles/update/{id}', 'VehiclesAdminPage@update', "admin");
 
     $router->add('GET', '/categories', 'CategoriesAdminPage@index', "admin");
+    $router->add('POST', '/categories/store', 'CategoriesAdminPage@store', "admin");
 
     $router->add('GET', '/signup', 'SignupPage@index');
     $router->add('POST', '/signup', 'SignupPage@signup');

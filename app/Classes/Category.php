@@ -20,6 +20,15 @@
         return $this->name;
     }
 
+    public function save()
+    {
+        $sql = "INSERT INTO categories (name) VALUES (:name)";
+        self::$db->query($sql);
+        self::$db->bind(':name', $this->name);
+        self::$db->execute();
+    }
+
+
     public static function find(int $id) {
         $sql = "SELECT * FROM categories
                 WHERE id = :id";
