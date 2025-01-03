@@ -47,7 +47,7 @@
         </button>
     </div>
 
-    <div id="alert" class="text-center py-12"></div>
+    <div id="alert" class="text-center py-6"></div>
     <!-- Reservation Cards -->
     <div id="reservationsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <?php if (empty($reservations)): ?>
@@ -112,6 +112,36 @@
                             <p class="font-semibold text-primary">$<?= $reservation["total_cost"] ?></p>
                         </div>
                     </div>
+
+                    <!-- Star Rating Section -->
+                    <div class="mt-4">
+                        <p class="text-gray-500 text-sm mb-2">Rate your experience:</p>
+                        <div class="flex items-center gap-5">
+                            <div class="flex items-center space-x-1 rating-container" data-vehicle-id="<?= $reservation['vehicle_id'] ?>">
+                                <?php
+                                    $fullStars = floor($reservation['rating']);
+                                    $halfStar = ($reservation['rating'] - $fullStars) >= 0.5 ? 1 : 0;
+                                    $emptyStars = 5 - $fullStars - $halfStar;
+
+                                    for ($i = 0; $i < $fullStars; $i++) {
+                                        echo '<i class="fas fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500" data-star="'. $i + 1 .'"></i>';
+                                    }
+                                    if ($halfStar) {
+                                        echo '<i class="fas fa-star-half-alt text-yellow-400 text-xl cursor-pointer hover:text-yellow-500" data-star="'. $fullStars + 1 .'"></i>';
+                                    }
+                                    for ($i = 0; $i < $emptyStars; $i++) {
+                                        echo '<i class="far fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500" data-star="'. $fullStars + $i + 1 .'"></i>';
+                                    }
+                                ?>
+                            </div>
+                            <?php if (!empty($reservation['rating'])): ?>
+                                <div class="text-xl">
+                                    <i class="fa-regular fa-trash-can text-primary"></i>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <?php endforeach; ?>
@@ -209,7 +239,7 @@
                 statusText = 'Active';
             } else {
                 statusClass = 'bg-gray-100 text-gray-800';
-                statusText = 'Completed';
+                $statusText = 'Completed';
             }
 
             const cardHTML = `
@@ -246,11 +276,76 @@
                                 <p class="font-semibold text-primary">$${reservation.total_cost ? parseFloat(reservation.total_cost).toFixed(2) : '0.00'}</p>
                             </div>
                         </div>
+
+                        <!-- Star Rating Section -->
+                        <div class="mt-4">
+                            <p class="text-gray-500 text-sm mb-2">Rate your experience:</p>
+                            <div class="flex items-center space-x-1 rating-container" data-vehicle-id="${reservation.vehicle_id}">
+                                ${Array.from({ length: 5 }, (_, index) => {
+                                    const starValue = index + 1;
+                                    const isFilled = starValue <= Math.floor(reservation.rating);
+                                    const hasHalf = starValue === Math.ceil(reservation.rating) && reservation.rating % 1 !== 0;
+                                    let iconClass = 'far fa-star';
+                                    if (isFilled) {
+                                        iconClass = 'fas fa-star text-yellow-400';
+                                    } else if (hasHalf) {
+                                        iconClass = 'fas fa-star-half-alt text-yellow-400';
+                                    }
+                                    return `
+                                        <i class="${iconClass} text-yellow-400 text-xl cursor-pointer hover:text-yellow-400" data-star="${starValue}"></i>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             `;
             reservationsContainer.innerHTML += cardHTML;
         });
-
+        attachStarRatingListeners();
     });
+
+    function attachStarRatingListeners() {
+        document.querySelectorAll('.rating-container').forEach(container => {
+            const stars = container.querySelectorAll('.fa-star');
+            const vehicleId = container.getAttribute("data-vehicle-id");
+
+            stars.forEach(star => {
+                star.addEventListener('click', async function() {
+                    const rating = parseInt(this.getAttribute("data-star"));
+                    highlightStars(stars, rating);
+
+                    const res = await fetch("<?= URLROOT . 'api/rateReservation'?>", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            vehicle_id: vehicleId,
+                            rating: rating
+                        })
+                    });
+                    console.log(await res.json())
+                    
+                });
+            });
+        });
+    }
+
+    function highlightStars(stars, rating) {
+        stars.forEach(star => {
+            const starValue = parseInt(star.dataset.star);
+            if (starValue <= rating) {
+                star.classList.remove('far');
+                star.classList.add('fas'); // Filled star color
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far'); // Empty star color
+            }
+        });
+    }
+
+    // Attach initial listeners when the page loads
+    document.addEventListener('DOMContentLoaded', attachStarRatingListeners);
 </script>
