@@ -94,14 +94,18 @@
     {
             $sql = "SELECT r.*,
                            v.name AS vehicle_name,
+                           v.id AS vehicle_id,
                            c.name AS category_name,
                            v.price * (DATEDIFF(r.to_date, r.from_date) + 1) AS total_cost,
-                           p.name as place_name
+                           p.name as place_name,
+                           ra.rate as rating
                     FROM reservations r
                     JOIN vehicles v ON r.vehicle_id = v.id
+                    LEFT JOIN ratings ra ON ra.vehicle_id = v.id AND ra.client_id = r.client_id
                     JOIN categories c ON v.category_id = c.id
                     JOIN places p ON r.place_id = p.id
-                    WHERE r.client_id = :client_id ";
+                    WHERE r.client_id = :client_id
+                    ";
     
             if (isset($filters['status']) && $filters['status'] !== 'All Status' && !empty($filters['status'])) {
                 if ($filters['status'] === 'Upcoming') {

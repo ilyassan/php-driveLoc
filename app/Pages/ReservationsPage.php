@@ -22,4 +22,26 @@
             
             echo json_encode(["success" => true, "data" => $reservations]);
         }
+
+        public function rateReservationVehicle()
+        {
+            $input = file_get_contents('php://input');
+            $data = json_decode($input, true);
+
+            $vehicleId = $data['vehicle_id'];
+            $clientId = user()->getId();
+            $rating = $data['rating'];
+
+            $rate = Rate::getRateOfClient($clientId, $vehicleId);
+
+            if ($rate) {
+                $rate->setRate($rating);
+                $rate->update();
+            }else{
+                $rate = new Rate(null, $rating, $clientId, $vehicleId);
+                $rate->save();
+            }
+
+            echo json_encode(["success" => true]);
+        }
     }
