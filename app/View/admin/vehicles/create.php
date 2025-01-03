@@ -1,7 +1,7 @@
 <div class="container mx-auto py-6">
     <form action="<?= URLROOT . "vehicles/store" ?>" method="POST" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-6">
         <div class="flex justify-center mb-4">
-            <div class="flex relative justify-center w-80 h-60">
+            <div class="flex relative justify-center w-96 h-60">
                 <img id="menu-image" class="border-2 border-gray-300 rounded-lg w-full h-full" src="../../assets/images/dishes/23808324.jpg" alt="Menu">
                 <label for="image" class="cursor-pointer border-2 border-gray-300 rounded-lg absolute w-full h-full bg-gray-50 text-gray-500 flex justify-center items-center">Upload an Image</label>
                 <input type="file" id="image" class="hidden" accept="image/gif, image/jpeg, image/png">
@@ -82,7 +82,7 @@
                        <span class="text-gray-500 text-sm">$</span>
                    </div>
                    <input type="number" id="price_per_day" name="price_per_day" class="outline-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-7" placeholder="250" />
-                 </div>
+                </div>
             </div>
         </div>
 
