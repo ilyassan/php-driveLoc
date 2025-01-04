@@ -26,6 +26,16 @@ class User extends BaseClass
         return $this->id;
     }
 
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
     public function getName()
     {
         return $this->first_name . " " . $this->last_name;
@@ -35,6 +45,7 @@ class User extends BaseClass
     {
         return $this->email;
     }
+    
     public function getPassword()
     {
         return $this->password;
@@ -124,6 +135,27 @@ class User extends BaseClass
         self::$db->query($sql);
         self::$db->bind(':role_id', self::$clientRoleId);
         self::$db->bind(':limit', $limit);
+
+        $results = self::$db->results();
+
+        return $results;
+    }
+
+    public static function paginate($page, $usersPerPage = 10)
+    {
+        $offset = ($page - 1) * $usersPerPage;
+        $sql = "SELECT u.*, COUNT(r.id) as reservations_count
+                FROM users u
+                LEFT JOIN reservations r ON r.client_id = u.id
+                WHERE u.role_id = :role_id
+                GROUP BY u.id
+                ORDER BY u.created_at DESC
+                LIMIT :offset, :users_per_page";
+        
+        self::$db->query($sql);
+        self::$db->bind(':role_id', self::$clientRoleId);
+        self::$db->bind(':offset', $offset);
+        self::$db->bind(':users_per_page', $usersPerPage);
 
         $results = self::$db->results();
 
