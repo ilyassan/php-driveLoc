@@ -63,7 +63,7 @@
 
 
     <!-- Vehicle Cards -->
-    <div id="alert" class="text-center py-12"></div>
+    <div id="alert" class="text-center py-6"></div>
     <div id="vehicles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($vehicles as $vehicle): ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -94,7 +94,7 @@
                 ?>
                     <span class="ml-2 text-gray-600">(<?= number_format($vehicle["rating"], 2) ?>)</span>
                 </div>
-                <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
+                <a href="<?= URLROOT . 'vehicles/'. $vehicle["id"] ?>" class="block mt-4 text-center text-secondary font-semibold hover:underline">
                     View Details
                 </a>
             </div>
@@ -185,9 +185,9 @@
                         </div>
                         <div class="mt-2 flex items-center text-sm text-yellow-400">
                             ${renderRatingStars(vehicle.rating)}
-                            <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating).toFixed(2)})</span>
+                            <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating || 0).toFixed(2)})</span>
                         </div>
-                        <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
+                        <a href="<?= URLROOT . 'vehicles/' ?>${vehicle.id}" class="block mt-4 text-center text-secondary font-semibold hover:underline">
                             View Details
                         </a>
                     </div>
