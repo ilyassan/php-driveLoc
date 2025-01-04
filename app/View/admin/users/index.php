@@ -2,9 +2,9 @@
     <!-- Clients List -->
     <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-5xl">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-semibold text-gray-800">Clients</h3>
+            <h3 class="text-2xl font-semibold text-gray-800"><?= htmlspecialchars("Clients") ?></h3>
             <span class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">
-                <?= $usersTotalCount ?> Clients
+                <?= htmlspecialchars($usersTotalCount) ?> Clients
             </span>
         </div>
 
@@ -13,11 +13,11 @@
             <table class="w-full text-left table-auto">
                 <thead class="bg-gray-50 text-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-sm font-semibold text-center">First Name</th>
-                        <th class="px-6 py-3 text-sm font-semibold text-center">Last Name</th>
-                        <th class="px-6 py-3 text-sm font-semibold text-center">Email</th>
-                        <th class="px-6 py-3 text-sm font-semibold text-center">Registration Date</th>
-                        <th class="px-6 py-3 text-sm font-semibold text-center">Status</th>
+                        <th class="px-6 py-3 text-sm font-semibold text-center"><?= htmlspecialchars("First Name") ?></th>
+                        <th class="px-6 py-3 text-sm font-semibold text-center"><?= htmlspecialchars("Last Name") ?></th>
+                        <th class="px-6 py-3 text-sm font-semibold text-center"><?= htmlspecialchars("Email") ?></th>
+                        <th class="px-6 py-3 text-sm font-semibold text-center"><?= htmlspecialchars("Registration Date") ?></th>
+                        <th class="px-6 py-3 text-sm font-semibold text-center"><?= htmlspecialchars("Status") ?></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-100">
@@ -76,7 +76,7 @@
 
                     <!-- Previous Button -->
                     <li>
-                        <a href="<?= $previousPage ? "?page=$previousPage" : '#' ?>"
+                        <a href="<?= $previousPage ? "?page=" . htmlspecialchars($previousPage) : '#' ?>"
                            class="px-4 py-2 rounded-md bg-white text-gray-500 hover:bg-gray-100 <?= !$previousPage ? 'opacity-50 cursor-not-allowed' : '' ?>"
                            <?= !$previousPage ? 'aria-disabled="true"' : '' ?>>
                             <i class="fas fa-chevron-left"></i>
@@ -99,9 +99,9 @@
                     <!-- Page Numbers -->
                     <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
                         <li>
-                            <a href="?page=<?= $i ?>"
+                            <a href="?page=<?= htmlspecialchars($i) ?>"
                                class="px-4 py-2 rounded-md <?= $i == $currentPage ? 'bg-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100' ?>">
-                                <?= $i ?>
+                                <?= htmlspecialchars($i) ?>
                             </a>
                         </li>
                     <?php endfor; ?>
@@ -115,15 +115,15 @@
                             </li>
                         <?php endif; ?>
                         <li>
-                            <a href="?page=<?= $totalPages ?>" class="px-4 py-2 rounded-md bg-white text-gray-700 hover:bg-gray-100">
-                                <?= $totalPages ?>
+                            <a href="?page=<?= htmlspecialchars($totalPages) ?>" class="px-4 py-2 rounded-md bg-white text-gray-700 hover:bg-gray-100">
+                                <?= htmlspecialchars($totalPages) ?>
                             </a>
                         </li>
                     <?php endif; ?>
 
                     <!-- Next Button -->
                     <li>
-                        <a href="<?= $nextPage ? "?page=$nextPage" : '#' ?>"
+                        <a href="<?= $nextPage ? "?page=" . htmlspecialchars($nextPage) : '#' ?>"
                            class="px-4 py-2 rounded-md bg-white text-gray-500 hover:bg-gray-100 <?= !$nextPage ? 'opacity-50 cursor-not-allowed' : '' ?>"
                            <?= !$nextPage ? 'aria-disabled="true"' : '' ?>>
                             <i class="fas fa-chevron-right"></i>

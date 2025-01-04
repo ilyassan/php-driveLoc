@@ -2,7 +2,7 @@
     <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Add New Category</h3>
         
-        <form action="<?= URLROOT . 'categories/store' ?>" method="POST" class="flex flex-col gap-4">
+        <form action="<?= htmlspecialchars(URLROOT . 'categories/store') ?>" method="POST" class="flex flex-col gap-4">
             <!-- Category Name Input -->
             <div class="flex-1">
                 <label for="category_name" class="block mb-2 text-sm font-medium text-gray-700">
@@ -21,7 +21,7 @@
 
             <!-- Submit Button -->
             <div class="flex justify-between items-center">
-            <div class="flex gap-6 text-primary text-3xl">
+                <div class="flex gap-6 text-primary text-3xl">
                     <button 
                         type="button"
                         onclick="addInput()"
@@ -42,7 +42,6 @@
                     Save
                 </button>
             </div>
-
         </form>
     </div>
 
@@ -51,27 +50,25 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-lg font-semibold text-gray-800">Vehicle Categories</h3>
             <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
-                <?= count($categories) ?> Categories
+                <?= htmlspecialchars(count($categories)) ?> Categories
             </span>
         </div>
 
         <!-- Categories Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <?php
-            foreach ($categories as $category):
-            ?>
-            <div class="group shadow-md relative bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
-                <!-- Category Name -->
-                <h4 class="text-gray-700 font-medium"><?= $category->getName() ?></h4>
-                
-                <!-- Delete Button -->
-                <button 
-                    onclick="confirmDelete('<?= $category->getName() ?>', '<?= $category->getId() ?>')"
-                    class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:text-red-600"
-                >
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
+            <?php foreach ($categories as $category): ?>
+                <div class="group shadow-md relative bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                    <!-- Category Name -->
+                    <h4 class="text-gray-700 font-medium"><?= htmlspecialchars($category->getName()) ?></h4>
+                    
+                    <!-- Delete Button -->
+                    <button 
+                        onclick="confirmDelete('<?= htmlspecialchars($category->getName()) ?>', '<?= htmlspecialchars($category->getId()) ?>')"
+                        class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:text-red-600"
+                    >
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             <?php endforeach; ?>
         </div>
     </div>
@@ -90,7 +87,7 @@
             >
                 Cancel
             </button>
-            <form action="<?= URLROOT . 'categories/delete' ?>" method="POST">
+            <form action="<?= htmlspecialchars(URLROOT . 'categories/delete') ?>" method="POST">
                 <input id="category_id" type="hidden" name="category_id" value="">
                 <button
                     type="submit"
@@ -127,8 +124,6 @@
             closeDeleteModal();
         }
     });
-
-
 
     let inputsContainer = document.getElementById('inputs');
     let count = 1;

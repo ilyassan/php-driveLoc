@@ -6,43 +6,43 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg p-6">
         <!-- Car Image -->
         <div class="flex items-center justify-center">
-            <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Car Image" class="rounded-lg w-full h-80">
+            <img src="<?= htmlspecialchars(ASSETSROOT . "images/porsche.webp") ?>" alt="Car Image" class="rounded-lg w-full h-80">
         </div>
 
         <!-- Car Information -->
         <div class="flex flex-col justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800"><?= $vehicle->getName() ?></h1>
+                <h1 class="text-3xl font-bold text-gray-800"><?= htmlspecialchars($vehicle->getName()) ?></h1>
                 <p class="text-gray-600 mt-2">Anywhere, this car is got your back. This is a luxury car with advanced features and a comfortable interior, perfect for your trips.</p>
                 <div class="mt-4">
-                    <p class="text-lg text-gray-700"><strong>Model:</strong> <?= $vehicle->getModel() ?></p>
-                    <p class="text-lg text-gray-700"><strong>Seats:</strong> <?= $vehicle->getSeats() ?></p>
-                    <p class="text-lg text-gray-700"><strong>Price:</strong> $<?= $vehicle->getPrice() ?> / Day</p>
+                    <p class="text-lg text-gray-700"><strong>Model:</strong> <?= htmlspecialchars($vehicle->getModel()) ?></p>
+                    <p class="text-lg text-gray-700"><strong>Seats:</strong> <?= htmlspecialchars($vehicle->getSeats()) ?></p>
+                    <p class="text-lg text-gray-700"><strong>Price:</strong> $<?= htmlspecialchars($vehicle->getPrice()) ?> / Day</p>
                     <div class="mt-2 flex items-center text-sm text-yellow-400">
-                    <?php
-                        $fullStars = floor($vehicle->getRating());
-                        $halfStar = ($vehicle->getRating() - $fullStars) >= 0.5 ? 1 : 0;
-                        $emptyStars = 5 - $fullStars - $halfStar;
+                        <?php
+                            $fullStars = floor($vehicle->getRating());
+                            $halfStar = ($vehicle->getRating() - $fullStars) >= 0.5 ? 1 : 0;
+                            $emptyStars = 5 - $fullStars - $halfStar;
 
-                        for ($i = 0; $i < $fullStars; $i++) {
-                            echo '<i class="fas fa-star"></i>';
-                        }
-                        if ($halfStar) {
-                            echo '<i class="fas fa-star-half-alt"></i>';
-                        }
-                        for ($i = 0; $i < $emptyStars; $i++) {
-                            echo '<i class="far fa-star"></i>';
-                        }
-                    ?>
-                        <span class="ml-2 text-gray-600">(<?= number_format($vehicle->getRating(), 2) ?>)</span>
+                            for ($i = 0; $i < $fullStars; $i++) {
+                                echo '<i class="fas fa-star"></i>';
+                            }
+                            if ($halfStar) {
+                                echo '<i class="fas fa-star-half-alt"></i>';
+                            }
+                            for ($i = 0; $i < $emptyStars; $i++) {
+                                echo '<i class="far fa-star"></i>';
+                            }
+                        ?>
+                        <span class="ml-2 text-gray-600">(<?= htmlspecialchars(number_format($vehicle->getRating(), 2)) ?>)</span>
                     </div>
                 </div>
             </div>
 
             <!-- Date Range Inputs -->
             <div class="mt-8">
-                <form action="<?= URLROOT . 'vehicles/reservate/' . $vehicle->getId() ?>" method="POST">
-                    <input type="hidden" name="vehicle_id" value="<?= $vehicle->getId() ?>">
+                <form action="<?= htmlspecialchars(URLROOT . 'vehicles/reservate/' . $vehicle->getId()) ?>" method="POST">
+                    <input type="hidden" name="vehicle_id" value="<?= htmlspecialchars($vehicle->getId()) ?>">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <!-- From Date -->
                         <div>
@@ -56,7 +56,7 @@
                         </div>
 
                         <!-- Location (Custom Dropdown) -->
-                         <div>
+                        <div>
                             <label for="locationDropdown" class="block text-gray-600 font-semibold mb-2">Location:</label>
                             <div class="relative">
                                 <input id="place_id" type="hidden" name="place_id">
@@ -73,12 +73,12 @@
                                     id="locationDropdownMenu"
                                     class="absolute dropdown-menu hidden bg-white shadow-md rounded-md w-full mt-2 z-10"
                                 >
-                                <?php foreach ($places as $place): ?>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', '<?= $place->getName() ?>', '<?= $place->getId() ?>')"><?= $place->getName() ?></li>
-                                <?php endforeach; ?>
+                                    <?php foreach ($places as $place): ?>
+                                        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('locationDropdown', 'selectedLocation', '<?= htmlspecialchars($place->getName()) ?>', '<?= htmlspecialchars($place->getId()) ?>')"><?= htmlspecialchars($place->getName()) ?></li>
+                                    <?php endforeach; ?>
                                 </ul>
                             </div>
-                         </div>
+                        </div>
                     </div>
 
                     <!-- Reserve Button -->
@@ -107,7 +107,7 @@
 </section>
 
 <script>
-        function toggleDropdown(dropdownId, menuId) {
+    function toggleDropdown(dropdownId, menuId) {
         closeAllDropdowns();
         
         const menu = document.getElementById(menuId);
@@ -136,132 +136,119 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-            const notAvailableDates = [
-                ["2025-01-01", "2025-01-05"],
-                ["2024-12-20", "2024-12-22"]
-            ];
+        const notAvailableDates = [
+            ["2025-01-01", "2025-01-05"],
+            ["2024-12-20", "2024-12-22"]
+        ];
 
-            const fromDateInput = document.getElementById('fromDate');
-            const toDateInput = document.getElementById('toDate');
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(0, 0, 0, 0);
-    
-             let fromDateInstance;
-            let toDateInstance;
+        const fromDateInput = document.getElementById('fromDate');
+        const toDateInput = document.getElementById('toDate');
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
 
+        let fromDateInstance;
+        let toDateInstance;
 
-            function isDateNotAvailable(date) {
-                if(!date){
-                    return false;
-                }
-                 for (const range of notAvailableDates) {
-                    const startDate = new Date(range[0]);
-                    const endDate = new Date(range[1]);
-                    const currentDate = new Date(date);
-
-                    if (currentDate >= startDate && currentDate <= endDate) {
-                        return true;
-                    }
-                }
+        function isDateNotAvailable(date) {
+            if (!date) {
                 return false;
             }
+            for (const range of notAvailableDates) {
+                const startDate = new Date(range[0]);
+                const endDate = new Date(range[1]);
+                const currentDate = new Date(date);
 
-            function addRedHighlight() {
-                const dateInputs = document.querySelectorAll('input[type="date"]');
-                 dateInputs.forEach(dateInput => {
-                    const calendarInput = dateInput.nextElementSibling;
-                    
-                     if (calendarInput && calendarInput.classList.contains('flatpickr-calendar')) {
-                        const days = calendarInput.querySelectorAll('.flatpickr-day');
-                        days.forEach(day => {
-                            const date = day.getAttribute('aria-label');
-                           const dayDate = day.getAttribute('data-day');
-
-                           if (dayDate){
-                              const currentDate = new Date(calendarInput.querySelector('.flatpickr-month').getAttribute('aria-label') + '-' + dayDate);
-                               if(isDateNotAvailable(currentDate)){
-                                    day.classList.add('unavailable-date');
-                                    day.classList.remove('available-date');
-                                }else {
-                                    day.classList.add('available-date');
-                                    day.classList.remove('unavailable-date');
-
-                                }
-
-                           } else {
-                               day.classList.remove('available-date');
-                               day.classList.remove('unavailable-date');
-                            }
-                        });
-
-                     }
-                    
-
-                });
-           }
-           
-           function getDisabledDates() {
-                 let disabledDates = [];
-                for (let date = new Date(0); date < tomorrow; date.setDate(date.getDate() + 1)) {
-                   disabledDates.push(new Date(date))
+                if (currentDate >= startDate && currentDate <= endDate) {
+                    return true;
                 }
-              
-                 return disabledDates;
             }
-    
-            fromDateInstance = flatpickr(fromDateInput, {
-                 disable: [
-                        ...getDisabledDates(),
-                          ...notAvailableDates.reduce((acc, range) => {
-                            const start = new Date(range[0]);
-                            const end   = new Date(range[1]);
+            return false;
+        }
 
-                           
-                             for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
-                                 acc.push(new Date(date));
+        function addRedHighlight() {
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(dateInput => {
+                const calendarInput = dateInput.nextElementSibling;
+
+                if (calendarInput && calendarInput.classList.contains('flatpickr-calendar')) {
+                    const days = calendarInput.querySelectorAll('.flatpickr-day');
+                    days.forEach(day => {
+                        const date = day.getAttribute('aria-label');
+                        const dayDate = day.getAttribute('data-day');
+
+                        if (dayDate) {
+                            const currentDate = new Date(calendarInput.querySelector('.flatpickr-month').getAttribute('aria-label') + '-' + dayDate);
+                            if (isDateNotAvailable(currentDate)) {
+                                day.classList.add('unavailable-date');
+                                day.classList.remove('available-date');
+                            } else {
+                                day.classList.add('available-date');
+                                day.classList.remove('unavailable-date');
                             }
-                            return acc;
-                        }, [])
-                    ],
-                 onChange: function(selectedDates) {
-                     addRedHighlight();
-                       if(selectedDates[0]){
-                          toDateInstance.set('minDate', selectedDates[0]);
+                        } else {
+                            day.classList.remove('available-date');
+                            day.classList.remove('unavailable-date');
                         }
-                        
-                 },
-                 onReady: function() {
-                        addRedHighlight();
+                    });
                 }
-                
-           });
-
-            toDateInstance = flatpickr(toDateInput, {
-                 disable: [
-                        ...getDisabledDates(),
-                            ...notAvailableDates.reduce((acc, range) => {
-                            const start = new Date(range[0]);
-                            const end   = new Date(range[1]);
-
-                           
-                             for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
-                                 acc.push(new Date(date));
-                            }
-                            return acc;
-                        }, [])
-                    ],
-                 onChange: function(selectedDates) {
-                     addRedHighlight();
-                     if(selectedDates[0]){
-                         fromDateInstance.set('maxDate', selectedDates[0]);
-                      }
-                },
-                 onReady: function() {
-                        addRedHighlight();
-                }
-                
             });
-    });
+        }
 
+        function getDisabledDates() {
+            let disabledDates = [];
+            for (let date = new Date(0); date < tomorrow; date.setDate(date.getDate() + 1)) {
+                disabledDates.push(new Date(date));
+            }
+            return disabledDates;
+        }
+
+        fromDateInstance = flatpickr(fromDateInput, {
+            disable: [
+                ...getDisabledDates(),
+                ...notAvailableDates.reduce((acc, range) => {
+                    const start = new Date(range[0]);
+                    const end = new Date(range[1]);
+
+                    for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+                        acc.push(new Date(date));
+                    }
+                    return acc;
+                }, [])
+            ],
+            onChange: function (selectedDates) {
+                addRedHighlight();
+                if (selectedDates[0]) {
+                    toDateInstance.set('minDate', selectedDates[0]);
+                }
+            },
+            onReady: function () {
+                addRedHighlight();
+            }
+        });
+
+        toDateInstance = flatpickr(toDateInput, {
+            disable: [
+                ...getDisabledDates(),
+                ...notAvailableDates.reduce((acc, range) => {
+                    const start = new Date(range[0]);
+                    const end = new Date(range[1]);
+
+                    for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+                        acc.push(new Date(date));
+                    }
+                    return acc;
+                }, [])
+            ],
+            onChange: function (selectedDates) {
+                addRedHighlight();
+                if (selectedDates[0]) {
+                    fromDateInstance.set('maxDate', selectedDates[0]);
+                }
+            },
+            onReady: function () {
+                addRedHighlight();
+            }
+        });
+    });
 </script>
