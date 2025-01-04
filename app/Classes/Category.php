@@ -65,4 +65,21 @@
         return $categories;
     }
 
+    public static function popularCategories()
+    {
+        $sql = "SELECT c.name as category, COUNT(r.id) as reservations_count
+                FROM categories c
+                JOIN vehicles v ON v.category_id = c.id
+                JOIN reservations r ON r.vehicle_id = v.id
+                GROUP BY c.id
+                ORDER BY reservations_count DESC
+                LIMIT 5";
+
+        self::$db->query($sql);
+        self::$db->execute();
+
+        $results = self::$db->results();
+        return $results;
+    }
+
 }

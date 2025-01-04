@@ -92,59 +92,59 @@
 
     public static function getReservationsOfClient($clientId, $filters = [])
     {
-            $sql = "SELECT r.*,
-                           v.name AS vehicle_name,
-                           v.id AS vehicle_id,
-                           c.name AS category_name,
-                           v.price * (DATEDIFF(r.to_date, r.from_date) + 1) AS total_cost,
-                           p.name as place_name,
-                           ra.rate as rating
-                    FROM reservations r
-                    JOIN vehicles v ON r.vehicle_id = v.id
-                    LEFT JOIN ratings ra ON ra.vehicle_id = v.id AND ra.client_id = r.client_id
-                    JOIN categories c ON v.category_id = c.id
-                    JOIN places p ON r.place_id = p.id
-                    WHERE r.client_id = :client_id
-                    ";
-    
-            if (isset($filters['status']) && $filters['status'] !== 'All Status' && !empty($filters['status'])) {
-                if ($filters['status'] === 'Upcoming') {
-                    $sql .= " AND r.from_date > NOW() ";
-                } elseif ($filters['status'] === 'Active') {
-                    $sql .= " AND r.from_date <= NOW() AND r.to_date >= NOW() ";
-                } elseif ($filters['status'] === 'Completed') {
-                    $sql .= " AND r.to_date < NOW() ";
-                }
+        $sql = "SELECT r.*,
+                        v.name AS vehicle_name,
+                        v.id AS vehicle_id,
+                        c.name AS category_name,
+                        v.price * (DATEDIFF(r.to_date, r.from_date) + 1) AS total_cost,
+                        p.name as place_name,
+                        ra.rate as rating
+                FROM reservations r
+                JOIN vehicles v ON r.vehicle_id = v.id
+                LEFT JOIN ratings ra ON ra.vehicle_id = v.id AND ra.client_id = r.client_id
+                JOIN categories c ON v.category_id = c.id
+                JOIN places p ON r.place_id = p.id
+                WHERE r.client_id = :client_id
+                ";
+
+        if (isset($filters['status']) && $filters['status'] !== 'All Status' && !empty($filters['status'])) {
+            if ($filters['status'] === 'Upcoming') {
+                $sql .= " AND r.from_date > NOW() ";
+            } elseif ($filters['status'] === 'Active') {
+                $sql .= " AND r.from_date <= NOW() AND r.to_date >= NOW() ";
+            } elseif ($filters['status'] === 'Completed') {
+                $sql .= " AND r.to_date < NOW() ";
             }
-    
-            if (isset($filters['start_date']) && !empty($filters['start_date'])) {
-                $sql .= " AND r.from_date >= :start_date ";
-            }
-    
-            if (isset($filters['to_date']) && !empty($filters['to_date'])) {
-                $sql .= " AND r.to_date <= :to_date ";
-            }
-    
-            $sql .= " ORDER BY r.from_date DESC";
-    
-            self::$db->query($sql);
-            self::$db->bind(':client_id', $clientId);
-    
-            if (isset($filters['start_date']) && !empty($filters['start_date'])) {
-                self::$db->bind(':start_date', $filters['start_date']);
-            }
-    
-            if (isset($filters['to_date']) && !empty($filters['to_date'])) {
-                self::$db->bind(':to_date', $filters['to_date']);
-            }
-    
-            if (!self::$db->execute()) {
-                return false;
-            }
-    
-            $results = self::$db->results();
-    
-            return $results;
+        }
+
+        if (isset($filters['start_date']) && !empty($filters['start_date'])) {
+            $sql .= " AND r.from_date >= :start_date ";
+        }
+
+        if (isset($filters['to_date']) && !empty($filters['to_date'])) {
+            $sql .= " AND r.to_date <= :to_date ";
+        }
+
+        $sql .= " ORDER BY r.from_date DESC";
+
+        self::$db->query($sql);
+        self::$db->bind(':client_id', $clientId);
+
+        if (isset($filters['start_date']) && !empty($filters['start_date'])) {
+            self::$db->bind(':start_date', $filters['start_date']);
+        }
+
+        if (isset($filters['to_date']) && !empty($filters['to_date'])) {
+            self::$db->bind(':to_date', $filters['to_date']);
+        }
+
+        if (!self::$db->execute()) {
+            return false;
+        }
+
+        $results = self::$db->results();
+
+        return $results;
     }
 
 
@@ -216,6 +216,23 @@
         } else {
             return 0;
         }
+    }
+
+
+    public static function getRecentReservations($limit)
+    {
+        $sql = "SELECT r.*, v.name AS vehicle_name
+                FROM reservations r
+                JOIN vehicles v ON r.vehicle_id = v.id
+                ORDER BY r.created_at DESC
+                LIMIT :limit";
+        
+        self::$db->query($sql);
+        self::$db->bind(':limit', $limit);
+
+        $results = self::$db->results();
+
+        return $results;
     }
 
 }
