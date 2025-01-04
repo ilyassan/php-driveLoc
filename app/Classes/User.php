@@ -113,6 +113,23 @@ class User extends BaseClass
         return $result->count;
     }
 
+    public static function getRecentRegistrations($limit)
+    {
+        $sql = "SELECT *
+                FROM users
+                WHERE role_id = :role_id
+                ORDER BY created_at DESC
+                LIMIT :limit";
+
+        self::$db->query($sql);
+        self::$db->bind(':role_id', self::$clientRoleId);
+        self::$db->bind(':limit', $limit);
+
+        $results = self::$db->results();
+
+        return $results;
+    }
+
     public function createSession()
     {
         $_SESSION['user_id'] = $this->id;

@@ -56,13 +56,23 @@
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-xs font-medium text-gray-500">Average Rating</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-2">4.8</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-2"><?= number_format($averageRating, 2) ?></h3>
                     <div class="flex items-center gap-1 mt-1 text-yellow-400 text-sm">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
+                        <?php
+                            $fullStars = floor($averageRating);
+                            $halfStar = ($averageRating - $fullStars) >= 0.5 ? 1 : 0;
+                            $emptyStars = 5 - $fullStars - $halfStar;
+
+                            for ($i = 0; $i < $fullStars; $i++) {
+                                echo '<i class="fas fa-star"></i>';
+                            }
+                            if ($halfStar) {
+                                echo '<i class="fas fa-star-half-alt"></i>';
+                            }
+                            for ($i = 0; $i < $emptyStars; $i++) {
+                                echo '<i class="far fa-star"></i>';
+                            }
+                        ?>
                     </div>
                 </div>
                 <div class="bg-yellow-50 p-3 rounded-lg">
@@ -93,19 +103,31 @@
         <div class="bg-white rounded-xl shadow-sm p-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Highest Rated Vehicle</h3>
             <div class="flex gap-4">
-                <img src="../images/porsche.webp" alt="Top Vehicle" class="w-32 h-32 object-cover rounded-lg">
+                <div class="max-w-[55%]">
+                    <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Top Vehicle" class="object-cover rounded-lg">
+                </div>
                 <div>
-                    <h4 class="text-xl font-bold text-gray-800">Porsche 911 GT3</h4>
+                    <h4 class="text-xl font-bold text-gray-800"><?= $topVehicle->name ?></h4>
                     <div class="flex items-center gap-1 text-yellow-400 mt-2">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span class="text-gray-600 ml-2">5.0 (48 reviews)</span>
+                    <?php
+                        $fullStars = floor($topVehicle->rating);
+                        $halfStar = ($topVehicle->rating - $fullStars) >= 0.5 ? 1 : 0;
+                        $emptyStars = 5 - $fullStars - $halfStar;
+
+                        for ($i = 0; $i < $fullStars; $i++) {
+                            echo '<i class="fas fa-star"></i>';
+                        }
+                        if ($halfStar) {
+                            echo '<i class="fas fa-star-half-alt"></i>';
+                        }
+                        for ($i = 0; $i < $emptyStars; $i++) {
+                            echo '<i class="far fa-star"></i>';
+                        }
+                    ?>
+                        <span class="ml-2 text-gray-600">(<?= $topVehicle->rates_count ?>) Review</span>
                     </div>
                     <p class="text-gray-600 mt-2">Luxury Sports Car</p>
-                    <p class="text-primary font-semibold mt-2">$850/day</p>
+                    <p class="text-primary font-semibold mt-2">$<?= $topVehicle->price ?>/day</p>
                 </div>
             </div>
         </div>
@@ -114,33 +136,51 @@
         <div class="bg-white rounded-xl shadow-sm p-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Activities</h3>
             <div class="space-y-4">
-                <div class="flex items-center gap-4">
-                    <div class="bg-green-100 p-2 rounded-full">
-                        <i class="fas fa-check text-green-600"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-800">New reservation: BMW M4</p>
-                        <p class="text-sm text-gray-500">2 hours ago</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="bg-blue-100 p-2 rounded-full">
-                        <i class="fas fa-user text-blue-600"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-800">New client registration</p>
-                        <p class="text-sm text-gray-500">5 hours ago</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="bg-yellow-100 p-2 rounded-full">
-                        <i class="fas fa-star text-yellow-600"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-800">New 5-star review: Mercedes AMG GT</p>
-                        <p class="text-sm text-gray-500">1 day ago</p>
-                    </div>
-                </div>
+                <?php if (empty($recentActivities)): ?>
+                    <p class="text-gray-600">No recent activities.</p>
+                <?php else: ?>
+                    <?php foreach ($recentActivities as $activity): ?>
+                        <div class="flex items-center gap-4">
+                            <?php if ($activity['type'] === 'reservation'): ?>
+                                <div class="bg-green-100 p-2 rounded-full">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                            <?php elseif ($activity['type'] === 'registration'): ?>
+                                <div class="bg-blue-100 p-2 rounded-full">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                </div>
+                            <?php elseif ($activity['type'] === 'rate'): ?>
+                                <div class="bg-yellow-100 p-2 rounded-full">
+                                    <i class="fas fa-star text-yellow-600"></i>
+                                </div>
+                            <?php endif; ?>
+                            <div>
+                                <p class="text-gray-800"><?= $activity['message'] ?></p>
+                                <p class="text-sm text-gray-500">
+                                <?php
+                                    $createdAt = new DateTime($activity['created_at']);
+                                    $now = new DateTime();
+                                    $interval = $now->diff($createdAt);
+
+                                    if ($interval->y > 0) {
+                                        echo $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
+                                    } elseif ($interval->m > 0) {
+                                        echo $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
+                                    } elseif ($interval->d > 0) {
+                                        echo $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
+                                    } elseif ($interval->h > 0) {
+                                        echo $interval->h . ' hour' . ($interval->h > 1 ? 's' : '') . ' ago';
+                                    } elseif ($interval->i > 0) {
+                                        echo $interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ago';
+                                    } else {
+                                        echo 'Just now';
+                                    }
+                                ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -148,14 +188,16 @@
 
 <script>
     // Revenue Chart
+    const revenues =<?= json_encode($lastSixMonthsRevenue) ?>;
+    
     const revenueCtx = document.getElementById('revenueChart').getContext('2d');
     new Chart(revenueCtx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: Object.keys(revenues),
             datasets: [{
                 label: 'Revenue',
-                data: [18500, 22000, 19500, 24000, 21500, 24500],
+                data: Object.values(revenues),
                 borderColor: '#EF4444',
                 tension: 0.4,
                 fill: true,
@@ -182,19 +224,22 @@
         }
     });
 
+    const categories = <?= json_encode($popularCategories)?>;
+    
     // Categories Chart
     const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
     new Chart(categoriesCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Sports Cars', 'Luxury Sedans', 'SUVs', 'Convertibles'],
+            labels: categories.map(c => c.category),
             datasets: [{
-                data: [35, 25, 20, 20],
+                data: categories.map(c => c.reservations_count),
                 backgroundColor: [
                     '#EF4444',
                     '#3B82F6',
                     '#10B981',
-                    '#F59E0B'
+                    '#F59E0B',
+                    '#7C3AED'
                 ]
             }]
         },

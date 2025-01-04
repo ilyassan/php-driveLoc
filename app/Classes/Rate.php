@@ -97,4 +97,30 @@
         return $result ? new self($result->id, $result->rate, $result->client_id, $result->vehicle_id) : null;
     }
 
+    public static function getRecentRates($limit)
+    {
+        $sql = "SELECT r.*, v.name as vehicle_name
+                FROM ratings r
+                JOIN vehicles v ON r.vehicle_id = v.id
+                ORDER BY r.created_at DESC
+                LIMIT :limit";
+
+        self::$db->query($sql);
+        self::$db->bind(':limit', $limit);
+
+        $results = self::$db->results();
+
+        return $results;
+    }
+
+    public static function avg()
+    {
+        $sql = "SELECT AVG(rate) as avg_rate FROM ratings";
+        self::$db->query($sql);
+        self::$db->execute();
+
+        $result = self::$db->single();
+        return $result->avg_rate;
+    }
+
 }
