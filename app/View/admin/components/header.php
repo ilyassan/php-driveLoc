@@ -25,13 +25,19 @@
             <div class="px-4 mb-3">
                 <div class="flex items-center gap-3 px-4 py-2 text-gray-600">
                     <i class="fas fa-user-circle text-xl"></i>
-                    <span class="font-medium">John Doe</span>
+                    <span class="font-medium"><?= user()->getName() ?></span>
                 </div>
             </div>
 
             <div class="px-4 space-y-1">
+                <?php
+                    function isActive($path)
+                    {
+                        return $path == requestPath() ? 'text-primary bg-primary/10' : 'text-gray-600 hover:bg-gray-100';
+                    }
+                ?>
                 <!-- Dashboard -->
-                <a href="dashboard.php" class="flex items-center gap-3 px-4 py-2 text-primary bg-primary/10 rounded-lg">
+                <a href="<?= URLROOT ?>" class="flex items-center gap-3 px-4 py-2 <?= isActive(URLROOT) ?> rounded-lg">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -39,13 +45,22 @@
                 <!-- Vehicles Section -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Vehicles</p>
-                    <a href="vehicles.php" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'vehicles' ?>" class="flex items-center gap-3 px-4 py-2 <?= isActive(URLROOT . 'vehicles') ?> rounded-lg">
                         <i class="fas fa-car"></i>
                         <span>All Vehicles</span>
                     </a>
-                    <a href="add-vehicle.php" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'vehicles/create' ?>" class="flex items-center gap-3 px-4 py-2 <?= isActive(URLROOT . 'vehicles/create') ?> rounded-lg">
                         <i class="fas fa-plus"></i>
                         <span>Add Vehicle</span>
+                    </a>
+                </div>
+
+                <!-- Categories Section -->
+                <div class="space-y-1 pt-2">
+                    <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Vehicle Categories</p>
+                    <a href="<?= URLROOT . 'categories' ?>" class="flex items-center gap-3 px-4 py-2 <?= isActive(URLROOT . 'categories') ?> rounded-lg">
+                        <i class="fas fa-layer-group"></i>
+                        <span>All Categories</span>
                     </a>
                 </div>
 

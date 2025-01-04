@@ -25,7 +25,7 @@
             <div class="mb-5 text-xs">
                 have an account ? <a href="login" class="text-primary font-bold">Log in</a>
             </div>
-            <input type="submit" value="Submit" name="signup" class="text-white w-full cursor-pointer hover:bg-primary/90 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm   py-2 mt-5  bg-primary ">
+            <input type="submit" value="Submit" name="signup" class="text-white w-full cursor-pointer hover:bg-primary/90 focus:ring-4 focus:outline-none focus:ring-primary/30 font-medium rounded-lg text-sm   py-2 mt-5  bg-primary ">
         </form>
     </div>
 </main>

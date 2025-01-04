@@ -283,15 +283,12 @@
                                     ${Array.from({ length: 5 }, (_, index) => {
                                         const starValue = index + 1;
                                         const isFilled = starValue <= Math.floor(reservation.rating);
-                                        const hasHalf = starValue === Math.ceil(reservation.rating) && reservation.rating % 1 !== 0;
                                         let iconClass = 'far fa-star';
                                         if (isFilled) {
                                             iconClass = 'fas fa-star text-yellow-400 star';
-                                        } else if (hasHalf) {
-                                            iconClass = 'fas fa-star-half-alt text-yellow-400 star';
                                         }
                                         return `
-                                            <i class="${iconClass} text-yellow-400 text-xl cursor-pointer hover:text-yellow-400 star" data-star="${starValue}"></i>
+                                            <i class="${iconClass} text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="${starValue}"></i>
                                         `;
                                     }).join('')}
                                 </div>
@@ -314,7 +311,7 @@
     function attachStarRatingListeners() {
         document.querySelectorAll('.rating-container').forEach(container => {
             const stars = container.querySelectorAll('.star');
-            const vehicleId = container.dataset.vehicleId;
+            const vehicleId = container.getAttribute("data-vehicle-id");
            const ratingArea = container.closest('.rating-area');
             stars.forEach(star => {
                 star.addEventListener('click', async function() {
@@ -348,7 +345,7 @@
 
     function highlightStars(stars, rating) {
         stars.forEach(star => {
-            const starValue = parseInt(star.dataset.star);
+            const starValue = parseInt(star.getAttribute("data-star"));
             if (starValue <= rating) {
                 star.classList.remove('far');
                 star.classList.add('fas');
@@ -362,7 +359,7 @@
    function attachDeleteRatingListeners() {
         document.querySelectorAll('.delete-rating-container').forEach(container => {
             const deleteButton = container.querySelector('.delete-rating-btn');
-             const vehicleId = container.dataset.vehicleId;
+            const vehicleId = container.getAttribute("data-vehicle-id");
             const ratingContainer = container.closest('.rating-area').querySelector('.rating-container');
 
             deleteButton.addEventListener('click', async function() {

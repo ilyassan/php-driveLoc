@@ -1,4 +1,5 @@
 
+<div class="py-6">
     <!-- Filter Bar -->
     <form id="filter" class="bg-white shadow-lg p-6 rounded-lg mb-8">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
@@ -54,7 +55,7 @@
 
 
     <!-- Vehicle Cards -->
-    <div id="alert" class="text-center py-5"></div>
+    <div id="alert" class="text-center py-3"></div>
     <div id="vehicles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($vehicles as $vehicle): ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -92,6 +93,7 @@
         </div>
         <?php endforeach; ?>
     </div>
+</div>
 
 
 <script>

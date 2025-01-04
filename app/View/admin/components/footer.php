@@ -26,12 +26,12 @@
             const titles = {
                 'dashboard': 'Dashboard',
                 'vehicles': 'Vehicles Management',
-                'add-vehicle': 'Add New Vehicle',
+                'create': 'Add New Vehicle',
+                'categories': 'Categories Management',
                 'reservations': 'Reservations',
                 'upcoming': 'Upcoming Reservations',
                 'users': 'Users Management'
             };
-
             title.textContent = titles[currentPage] || 'Dashboard';
         }
 

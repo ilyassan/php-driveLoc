@@ -33,7 +33,7 @@
         <section class="bg-white py-12">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-2xl font-bold text-secondary">Sport Cars</h2>
-                <a href="#" class="text-primary font-medium hover:underline flex items-center">
+                <a href="<?= URLROOT . 'vehicles' ?>" class="text-primary font-medium hover:underline flex items-center">
                     See all <span class="ml-1"><i class="fa-solid fa-arrow-right"></i></span>
                 </a>
             </div>
@@ -57,7 +57,7 @@
                             </p>
                             <div class="flex items-center justify-between">
                                 <p class="text-xl font-bold text-secondary">$<?= $vehicle["price"] ?><span class="text-sm font-medium">/day</span></p>
-                                <a href="#" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See more</a>
+                                <a href="<?= URLROOT . 'vehicles/' . $vehicle['id'] ?>" class="bg-secondary text-white px-4 py-2 text-sm font-medium rounded-md">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -70,6 +70,6 @@
         }    
     ?>
 
-    <a href="#" class="bg-primary mx-auto block w-fit text-white px-3 py-2 rounded-lg font-semibold">Explore All Cars</a>
+    <a href="<?= URLROOT . 'vehicles' ?>" class="bg-primary mx-auto block w-fit text-white px-3 py-2 rounded-lg font-semibold">Explore All Cars</a>
 
 </main>
