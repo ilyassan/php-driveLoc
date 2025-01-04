@@ -47,21 +47,24 @@
         </button>
     </div>
 
-    <div id="alert" class="text-center py-6"></div>
+    <div id="alert" class="text-center py-6 <?= (empty($reservations)) ? '': 'hidden'?>">
+        <i class="fa-solid fa-envelope text-6xl text-gray-400 mb-6"></i>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Reservations Available</h2>
+        <p class="text-gray-500">Sorry, we couldn't find any reservations matching your criteria.</p>
+    </div>
+
     <!-- Reservation Cards -->
     <div id="reservationsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <?php if (empty($reservations)): ?>
-            <p class="text-gray-600 text-center">No reservations found.</p>
-        <?php else: ?>
-            <?php foreach ($reservations as $reservation): ?>
+    <?php if (!empty($reservations)): ?>
+        <?php foreach ($reservations as $reservation): ?>
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <div class="p-6">
                     <!-- Reservation Header -->
                     <div class="flex justify-between items-start mb-4">
                         <div>
-                            <h3 class="text-lg font-bold text-secondary"><?= $reservation["vehicle_name"] ?></h3>
-                            <p class="text-gray-500 text-sm"><?= $reservation["category_name"] ?></p>
-                            <p class="text-gray-500 text-sm">Location: <?= $reservation["place_name"] ?></p>
+                            <h3 class="text-lg font-bold text-secondary"><?= htmlspecialchars($reservation["vehicle_name"]) ?></h3>
+                            <p class="text-gray-500 text-sm"><?= htmlspecialchars($reservation["category_name"]) ?></p>
+                            <p class="text-gray-500 text-sm">Location: <?= htmlspecialchars($reservation["place_name"]) ?></p>
                         </div>
                         <span class="px-3 py-1 rounded-full text-sm font-semibold
                             <?php
@@ -82,9 +85,9 @@
                                 $statusClass = 'bg-gray-100 text-gray-800';
                                 $statusText = 'Completed';
                             }
-                            echo $statusClass;
+                            echo htmlspecialchars($statusClass);
                             ?>">
-                            <?php echo $statusText; ?>
+                            <?= htmlspecialchars($statusText) ?>
                         </span>
                     </div>
 
@@ -92,11 +95,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <p class="text-gray-500 text-sm">Pickup Date</p>
-                            <p class="font-semibold"><?php echo (new DateTime($reservation["from_date"]))->format('M j, Y'); ?></p>
+                            <p class="font-semibold"><?= htmlspecialchars((new DateTime($reservation["from_date"]))->format('M j, Y')) ?></p>
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">Return Date</p>
-                            <p class="font-semibold"><?php echo (new DateTime($reservation["to_date"]))->format('M j, Y'); ?></p>
+                            <p class="font-semibold"><?= htmlspecialchars((new DateTime($reservation["to_date"]))->format('M j, Y')) ?></p>
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">Duration</p>
@@ -104,12 +107,11 @@
                                 $diff = $pickupDate->diff($returnDate);
                                 $duration = $diff->days + 1;
                             ?>
-                            <p class="font-semibold"><?php echo $duration; ?> Days</p>
+                            <p class="font-semibold"><?= htmlspecialchars($duration) ?> Days</p>
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">Total Cost</p>
-                            <!-- You'll likely need to fetch the total cost associated with this reservation -->
-                            <p class="font-semibold text-primary">$<?= $reservation["total_cost"] ?></p>
+                            <p class="font-semibold text-primary">$<?= htmlspecialchars($reservation["total_cost"]) ?></p>
                         </div>
                     </div>
 
@@ -117,25 +119,25 @@
                     <div class="mt-4">
                         <p class="text-gray-500 text-sm mb-2">Rate your experience:</p>
                         <div class="flex items-center justify-between rating-area">
-                            <div class="flex items-center space-x-1 rating-container" data-vehicle-id="<?= $reservation['vehicle_id'] ?>">
+                            <div class="flex items-center space-x-1 rating-container" data-vehicle-id="<?= htmlspecialchars($reservation['vehicle_id']) ?>">
                                 <?php
                                     $fullStars = floor($reservation['rating']);
                                     $halfStar = ($reservation['rating'] - $fullStars) >= 0.5 ? 1 : 0;
                                     $emptyStars = 5 - $fullStars - $halfStar;
 
                                     for ($i = 0; $i < $fullStars; $i++) {
-                                        echo '<i class="fas fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. $i + 1 .'"></i>';
+                                        echo '<i class="fas fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. htmlspecialchars($i + 1) .'"></i>';
                                     }
                                     if ($halfStar) {
-                                        echo '<i class="fas fa-star-half-alt text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. $fullStars + 1 .'"></i>';
+                                        echo '<i class="fas fa-star-half-alt text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. htmlspecialchars($fullStars + 1) .'"></i>';
                                     }
                                     for ($i = 0; $i < $emptyStars; $i++) {
-                                        echo '<i class="far fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. $fullStars + $i + 1 .'"></i>';
+                                        echo '<i class="far fa-star text-yellow-400 text-xl cursor-pointer hover:text-yellow-500 star" data-star="'. htmlspecialchars($fullStars + $i + 1) .'"></i>';
                                     }
                                 ?>
                             </div>
                             <?php if (!empty($reservation['rating'])): ?>
-                                <div class="delete-rating-container" data-vehicle-id="<?= $reservation['vehicle_id'] ?>">
+                                <div class="delete-rating-container" data-vehicle-id="<?= htmlspecialchars($reservation['vehicle_id']) ?>">
                                     <i class="fa-regular fa-trash-can text-primary text-xl cursor-pointer delete-rating-btn"></i>
                                 </div>
                             <?php endif; ?>
@@ -153,7 +155,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <!-- Include flatpickr JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>    // Initialize flatpickr
+<script>
+    // Initialize flatpickr
     flatpickr(".flatpickr", {
         dateFormat: "Y-m-d",
         altInput: true,
@@ -188,14 +191,14 @@
         closeAllDropdowns();
     });
 
-   document.getElementById('filterBtn').addEventListener('click', async function() {
+    document.getElementById('filterBtn').addEventListener('click', async function() {
         const selectedStatus = document.getElementById('selectedStatus').innerText;
         const startDate = document.getElementById('start_date').value;
         const endDate = document.getElementById('end_date').value;
 
         const reservationsContainer = document.getElementById('reservationsContainer');
 
-        const res = await fetch("<?= URLROOT . 'api/getReservations'?>", {
+        const res = await fetch("<?= htmlspecialchars(URLROOT . 'api/getReservations') ?>", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -211,14 +214,10 @@
         const filteredReservations = data.data;
 
         reservationsContainer.innerHTML = '';
-        document.getElementById("alert").innerHTML = '';
+        document.getElementById("alert").classList.add("hidden");
 
         if (filteredReservations.length === 0) {
-            document.getElementById("alert").innerHTML = `
-                    <i class="fa-solid fa-envelope text-6xl text-gray-400 mb-6"></i>
-                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Reservations Available</h2>
-                    <p class="text-gray-500">Sorry, we couldn't find any reservations matching your criteria.</p>
-            `;
+            document.getElementById("alert").classList.remove("hidden");
            return;
         }
 
@@ -318,7 +317,7 @@
                     const rating = parseInt(this.getAttribute("data-star"));
                     highlightStars(stars, rating);
 
-                    const res = await fetch("<?= URLROOT . 'api/rateReservation'?>", {
+                    const res = await fetch("<?= htmlspecialchars(URLROOT . 'api/rateReservation') ?>", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -363,7 +362,7 @@
             const ratingContainer = container.closest('.rating-area').querySelector('.rating-container');
 
             deleteButton.addEventListener('click', async function() {
-                const res = await fetch("<?= URLROOT . 'api/deleteRating'?>", {
+                const res = await fetch("<?= htmlspecialchars(URLROOT . 'api/deleteRating') ?>", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

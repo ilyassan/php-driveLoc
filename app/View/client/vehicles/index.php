@@ -1,10 +1,10 @@
 <section class="container bg-gray-50 py-10">
     <!-- Hero Section -->
     <div class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-gray-800">Find Your Perfect Ride</h1>
-        <p class="text-lg text-gray-600 mt-4">Explore a wide range of vehicles to suit your needs and budget.</p>
+        <h1 class="text-4xl font-bold text-gray-800"><?= htmlspecialchars("Find Your Perfect Ride") ?></h1>
+        <p class="text-lg text-gray-600 mt-4"><?= htmlspecialchars("Explore a wide range of vehicles to suit your needs and budget.") ?></p>
         <a href="#filter" class="mt-6 inline-block px-6 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-red-600">
-            Start Browsing
+            <?= htmlspecialchars("Start Browsing") ?>
         </a>
     </div>
 
@@ -27,7 +27,7 @@
                     class="flex items-center border border-gray-300 rounded-md px-4 py-2 w-full bg-white text-gray-500 focus:outline-none"
                 >
                     <i class="fas fa-layer-group text-gray-500 mr-2"></i>
-                    <span id="selectedCategories">Categories</span>
+                    <span id="selectedCategories"><?= htmlspecialchars("Categories") ?></span>
                     <i class="fas fa-chevron-down ml-auto text-gray-400"></i>
                 </button>
                 <!-- Dropdown Options -->
@@ -35,9 +35,9 @@
                     id="categoriesDropdownMenu"
                     class="absolute dropdown-menu hidden bg-white shadow-md rounded-md w-full mt-2 z-10"
                 >
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', 'All')">All</li>
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', '<?= htmlspecialchars("All") ?>')"><?= htmlspecialchars("All") ?></li>
                     <?php foreach ($categories as $category): ?>
-                        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', '<?= $category->getName() ?>', '<?= $category->getId() ?>')"><?= $category->getName() ?></li>
+                        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="selectOption('categoriesDropdown', 'selectedCategories', '<?= htmlspecialchars($category->getName()) ?>', '<?= htmlspecialchars($category->getId()) ?>')"><?= htmlspecialchars($category->getName()) ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -57,7 +57,7 @@
 
         <!-- Search Button -->
         <button class="flex items-center gap-2 w-fit mx-auto mt-4 px-6 py-1.5 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-red-600">
-            Search <i class="fa-solid fa-search"></i>
+            <?= htmlspecialchars("Search") ?> <i class="fa-solid fa-search"></i>
         </button>
     </form>
 
@@ -67,14 +67,14 @@
     <div id="vehicles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($vehicles as $vehicle): ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <img src="<?= ASSETSROOT . "images/porsche.webp" ?>" alt="Car Image" class="w-full h-48 object-cover">
+            <img src="<?= htmlspecialchars(ASSETSROOT . "images/porsche.webp") ?>" alt="Car Image" class="w-full h-48 object-cover">
             <div class="p-4">
-                <h3 class="text-lg font-bold text-secondary"><?= $vehicle["name"] ?></h3>
-                <p class="text-gray-500 text-sm"><?= $vehicle["category"] ?></p>
-                <p class="text-gray-500 text-sm mb-0.5">Seats: <?= $vehicle["seats"] ?></p>
-                <p class="text-sm text-gray-500 mb-2 flex items-center"><i class="fas <?= $vehicle["type"] == "Gas" ? "fa-gas-pump" : "fa-car-battery"?> text-gray-500 mr-1"></i> <?= $vehicle["type"] ?></p>
+                <h3 class="text-lg font-bold text-secondary"><?= htmlspecialchars($vehicle["name"]) ?></h3>
+                <p class="text-gray-500 text-sm"><?= htmlspecialchars($vehicle["category"]) ?></p>
+                <p class="text-gray-500 text-sm mb-0.5">Seats: <?= htmlspecialchars($vehicle["seats"]) ?></p>
+                <p class="text-sm text-gray-500 mb-2 flex items-center"><i class="fas <?= htmlspecialchars($vehicle["type"]) == "Gas" ? "fa-gas-pump" : "fa-car-battery"?> text-gray-500 mr-1"></i> <?= htmlspecialchars($vehicle["type"]) ?></p>
                 <div class="mt-2">
-                    <span class="text-primary font-bold">$<?= $vehicle["price"] ?>/ Day</span>
+                    <span class="text-primary font-bold">$<?= htmlspecialchars($vehicle["price"]) ?>/ Day</span>
                 </div>
                 <div class="mt-2 flex items-center text-sm text-yellow-400">
                 <?php
@@ -92,10 +92,10 @@
                         echo '<i class="far fa-star"></i>';
                     }
                 ?>
-                    <span class="ml-2 text-gray-600">(<?= number_format($vehicle["rating"], 2) ?>)</span>
+                    <span class="ml-2 text-gray-600">(<?= htmlspecialchars(number_format($vehicle["rating"], 2)) ?>)</span>
                 </div>
-                <a href="<?= URLROOT . 'vehicles/'. $vehicle["id"] ?>" class="block mt-4 text-center text-secondary font-semibold hover:underline">
-                    View Details
+                <a href="<?= htmlspecialchars(URLROOT . 'vehicles/' . $vehicle["id"]) ?>" class="block mt-4 text-center text-secondary font-semibold hover:underline">
+                    <?= htmlspecialchars("View Details") ?>
                 </a>
             </div>
         </div>
@@ -166,8 +166,8 @@
         if (filteredVehicles.length == 0) {
             document.getElementById("alert").innerHTML = `
                     <i class="fa-solid fa-car-burst text-6xl text-gray-400 mb-6"></i>
-                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Cars Available</h2>
-                    <p class="text-gray-500">Sorry, we couldn't find any cars matching your criteria. Please try adjusting your filters.</p>
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4"><?= htmlspecialchars("No Cars Available") ?></h2>
+                    <p class="text-gray-500"><?= htmlspecialchars("Sorry, we couldn't find any cars matching your criteria. Please try adjusting your filters.") ?></p>
             `;
             return;
         }
@@ -188,7 +188,7 @@
                             <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating || 0).toFixed(2)})</span>
                         </div>
                         <a href="<?= URLROOT . 'vehicles/' ?>${vehicle.id}" class="block mt-4 text-center text-secondary font-semibold hover:underline">
-                            View Details
+                            <?= htmlspecialchars("View Details") ?>
                         </a>
                     </div>
                 </div>
