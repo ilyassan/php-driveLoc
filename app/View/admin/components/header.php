@@ -80,7 +80,7 @@
                 <!-- Users Section -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Users</p>
-                    <a href="users.php" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'users' ?>" class="flex items-center gap-3 px-4 py-2 <?= isActive(URLROOT . 'users') ?> rounded-lg">
                         <i class="fas fa-users"></i>
                         <span>All Users</span>
                     </a>
