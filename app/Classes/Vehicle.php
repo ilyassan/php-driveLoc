@@ -6,17 +6,19 @@
     private $model;
     private $seats;
     private $price;
+    private $image_name;
     private $type_id;
     private $category_id;
     private $rating;
 
-    public function __construct($id, $name, $model, $seats, $price, $type_id, $category_id, $rating = null)
+    public function __construct($id, $name, $model, $seats, $price, $image_name, $type_id, $category_id, $rating = null)
     {
         $this->id = $id;
         $this->name = $name;
         $this->model = $model;
         $this->seats = $seats;
         $this->price = $price;
+        $this->image_name = $image_name;
         $this->type_id = $type_id;
         $this->category_id = $category_id;
         $this->rating = $rating;
@@ -45,6 +47,16 @@
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function getImagePath()
+    {
+        return ASSETSROOT . 'images/vehicles/' . $this->image_name;
+    }
+
+    public function getImageName()
+    {
+        return $this->image_name;
     }
 
     public function getTypeId()
@@ -82,6 +94,11 @@
         $this->price = $price;
     }
 
+    public function setImageName($image_name)
+    {
+        $this->image_name = $image_name;
+    }
+
     public function setCategoryId($category_id)
     {
         $this->category_id = $category_id;
@@ -95,14 +112,15 @@
 
     public function save()
     {
-        $sql = "INSERT INTO vehicles (name, model, seats, price, type_id, category_id)
-                VALUES (:name, :model, :seats, :price, :type_id, :category_id)
+        $sql = "INSERT INTO vehicles (name, model, seats, price, image_name, type_id, category_id)
+                VALUES (:name, :model, :seats, :price, :image_name, :type_id, :category_id)
                 ";
         self::$db->query($sql);
         self::$db->bind(':name', $this->name);
         self::$db->bind(':model', $this->model);
         self::$db->bind(':seats', $this->seats);
         self::$db->bind(':price', $this->price);
+        self::$db->bind(':image_name', $this->image_name);
         self::$db->bind(':type_id', $this->type_id);
         self::$db->bind(':category_id', $this->category_id);
 
@@ -112,7 +130,7 @@
     public function update()
     {
         $sql = "UPDATE vehicles
-                SET name = :name, model = :model, seats = :seats, price = :price, type_id = :type_id, category_id = :category_id
+                SET name = :name, model = :model, seats = :seats, price = :price, image_name = :image_name, type_id = :type_id, category_id = :category_id
                 WHERE id = :id";
 
         self::$db->query($sql);
@@ -121,6 +139,7 @@
         self::$db->bind(':model', $this->model);
         self::$db->bind(':seats', $this->seats);
         self::$db->bind(':price', $this->price);
+        self::$db->bind(':image_name', $this->image_name);
         self::$db->bind(':type_id', $this->type_id);
         self::$db->bind(':category_id', $this->category_id);
 
@@ -150,7 +169,7 @@
 
 
         $result = self::$db->single();
-        return new self($result->id, $result->name, $result->model, $result->seats, $result->price, $result->type_id, $result->category_id, $result->rating);
+        return new self($result->id, $result->name, $result->model, $result->seats, $result->price, $result->image_name, $result->type_id, $result->category_id, $result->rating);
     }
     
     public static function all($filters = [])

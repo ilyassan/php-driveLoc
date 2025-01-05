@@ -42,7 +42,7 @@
                     foreach ($vehicles as $vehicle) {
                 ?>
                     <div onclick="window.location.href='<?= htmlspecialchars(URLROOT . 'vehicles/' . $vehicle['id']) ?>'" class="card cursor-pointer bg-white shadow-lg rounded-lg overflow-hidden">
-                        <img src="<?= htmlspecialchars(ASSETSROOT . "images/porsche.webp") ?>" alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
+                        <img src="<?= ASSETSROOT . "images/vehicles/" . $vehicle['image_name'] ?>" alt="Porsche Cayenne 2020" class="w-full h-48 object-cover">
                         <div class="p-4">
                             <h3 class="font-bold text-lg mb-2"><?= htmlspecialchars($vehicle["name"]) ?></h3>
                             <p class="text-sm text-gray-500 flex items-center mb-2">

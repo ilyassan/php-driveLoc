@@ -6,9 +6,9 @@
         <form action="<?= htmlspecialchars(URLROOT . 'vehicles/update/' . $vehicle->getId()) ?>" method="POST" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-6">
             <div class="flex justify-center mb-4">
                 <div class="flex relative justify-center w-96 h-60">
-                    <img id="menu-image" class="border-2 border-gray-300 rounded-lg w-full h-full" src="<?= htmlspecialchars(ASSETSROOT . "images/porsche.webp") ?>" alt="Menu">
+                    <img id="menu-image" class="border-2 border-gray-300 rounded-lg w-full h-full" src="<?= htmlspecialchars($vehicle->getImagePath()) ?>" alt="Menu">
                     <label for="image" class="cursor-pointer opacity-0 border-2 border-gray-300 rounded-lg absolute w-full h-full bg-gray-50 text-gray-500 flex justify-center items-center">Upload an Image</label>
-                    <input type="file" id="image" class="hidden" accept="image/gif, image/jpeg, image/png">
+                    <input type="file" id="image" name="image" class="hidden" accept="image/gif, image/jpeg, image/png">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
