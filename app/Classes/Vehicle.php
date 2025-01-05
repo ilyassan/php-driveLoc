@@ -240,7 +240,7 @@
 
     public static function topVehicle()
     {
-        $sql = "SELECT v.*, AVG(r.rate) as rating, COUNT(r.rate) as rates_count, c.name as category_name
+        $sql = "SELECT v.*, AVG(r.rate) as rating, c.name as category_name
                 FROM vehicles v
                 JOIN categories c ON c.id = v.category_id
                 LEFT JOIN ratings r ON r.vehicle_id = v.id

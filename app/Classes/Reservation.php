@@ -101,7 +101,7 @@
                         ra.rate as rating
                 FROM reservations r
                 JOIN vehicles v ON r.vehicle_id = v.id
-                LEFT JOIN ratings ra ON ra.vehicle_id = v.id AND ra.client_id = r.client_id
+                LEFT JOIN ratings ra ON ra.vehicle_id = v.id AND ra.client_id = r.client_id AND is_deleted = 0
                 JOIN categories c ON v.category_id = c.id
                 JOIN places p ON r.place_id = p.id
                 WHERE r.client_id = :client_id
