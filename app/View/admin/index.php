@@ -104,7 +104,7 @@
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Highest Rated Vehicle</h3>
             <div class="flex gap-4">
                 <div class="max-w-[55%]">
-                    <img src="<?= htmlspecialchars(ASSETSROOT . "images/porsche.webp") ?>" alt="Top Vehicle" class="object-cover rounded-lg">
+                    <img src="<?= htmlspecialchars(ASSETSROOT . "images/vehicles/" .$topVehicle->image_name) ?>" alt="Top Vehicle" class="object-cover rounded-lg">
                 </div>
                 <div>
                     <h4 class="text-xl font-bold text-gray-800"><?= htmlspecialchars($topVehicle->name) ?></h4>
