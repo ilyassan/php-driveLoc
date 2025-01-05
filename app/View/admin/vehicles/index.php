@@ -143,7 +143,8 @@
                                 name,
                                 category_id: categoryId,
                                 min_price: minPrice,
-                                max_price: maxPrice
+                                max_price: maxPrice,
+                                csrf_token: "<?= generateCsrfToken()?>"
                             })
                         });
         let filteredVehicles = (await res.json()).data;
@@ -177,7 +178,7 @@
                             ${renderRatingStars(vehicle.rating)}
                             <span class="ml-2 text-gray-600">(${parseFloat(vehicle.rating || 0).toFixed(2)})</span>
                         </div>
-                        <a href="#" class="block mt-4 text-center text-secondary font-semibold hover:underline">
+                        <a href="<?=URLROOT . 'vehicles/edit/'?>${vehicle.id}" class="block mt-4 text-center text-secondary font-semibold hover:underline">
                             <?= htmlspecialchars("View Details") ?>
                         </a>
                     </div>

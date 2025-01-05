@@ -11,6 +11,10 @@ class Router
 
     public function dispatch($request)
     {
+        if ($request->getMethod() === 'POST' && !validateCsrfToken()) {
+            redirect('');
+        }
+
         foreach ($this->routes as $route) {
             $isRouteAcceptParam = strpos($route['path'], "/{id}") != false;
             $param = null;

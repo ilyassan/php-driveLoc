@@ -206,7 +206,8 @@
             body: JSON.stringify({
                 status: selectedStatus,
                 start_date: startDate,
-                to_date: endDate
+                to_date: endDate,
+                csrf_token: "<?= generateCsrfToken()?>"
             })
         });
 
@@ -324,7 +325,8 @@
                         },
                         body: JSON.stringify({
                             vehicle_id: vehicleId,
-                            rating: rating
+                            rating: rating,
+                            csrf_token: "<?= generateCsrfToken()?>"
                         })
                     });
                     
@@ -368,7 +370,8 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        vehicle_id: vehicleId
+                        vehicle_id: vehicleId,
+                        csrf_token: "<?= generateCsrfToken()?>"
                     })
                 });
 
