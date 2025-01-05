@@ -52,6 +52,18 @@
         if (warningMessage) {
             Swal.fire("Warning", warningMessage, "warning");
         }
+
+
+        let forms = document.querySelectorAll('form');
+        if (forms.length > 0) {
+            forms.forEach(form => {
+                let input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', 'csrf_token');
+                input.value = "<?= generateCsrfToken() ?>";
+                form.appendChild(input);
+            });
+        }
     </script>
 </body>
 </html>

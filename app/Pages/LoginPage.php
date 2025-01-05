@@ -54,7 +54,6 @@
                 }
 
                 $user->createSession();
-                flash("success", "Logged in successfully :)");
                 redirect("");
             }
             else{

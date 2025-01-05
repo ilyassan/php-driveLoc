@@ -153,7 +153,8 @@
                                 name,
                                 category_id: categoryId,
                                 min_price: minPrice,
-                                max_price: maxPrice
+                                max_price: maxPrice,
+                                csrf_token: "<?= generateCsrfToken()?>"
                             })
                         });
         let filteredVehicles = (await res.json()).data;
