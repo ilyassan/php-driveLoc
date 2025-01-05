@@ -1,25 +1,60 @@
-<footer class="bg-primary py-8 text-white">
-        <div class="container flex justify-between flex-col gap-7 sm:flex-row sm:gap-0">
-            <div class="text-3xl text-center sm:text-left font-lux font-bold">CAREX</div>
-            <div class="flex flex-1 justify-center gap-10 sm:justify-evenly sm:gap-0">
-                <div class="flex flex-col text-based">
-                    <h3 class="text-xl font-bold mb-4">Links</h3>
-                    <div class="flex flex-col gap-3">
-                        <span>Home</span>
-                        <span>Vehicles</span>
-                        <span>Reservations</span>
-                    </div>
-                </div>
-                <div class="flex flex-col text-based">
-                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                    <div class="flex flex-col gap-3">
-                        <span>Email</span>
-                        <span>Phone</span>
-                    </div>
-                </div>
-            </div>
+<footer class="bg-gray-100 py-8 text-gray-800">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col gap-10 md:flex-row md:justify-between">
+      <!-- Company Info -->
+      <div>
+        <h2 class="text-2xl font-bold text-red-600 mb-2">CAREX</h2>
+        <p class="text-sm">
+        Rent new cars with famous brands such as Bentley, Mercedes, Audi, Porsche, Honda...
+        </p>
+        <div class="mt-4 flex gap-4 text-gray-500">
+          <!-- Social Media Icons -->
+          <a href="#" aria-label="Facebook" class="hover:text-red-600"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter" class="hover:text-red-600"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram" class="hover:text-red-600"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="TikTok" class="hover:text-red-600"><i class="fab fa-tiktok"></i></a>
         </div>
-    </footer>
+      </div>
+
+      <div class="flex justify-around w-3/4">
+        <!-- Navigation Links -->
+        <div>
+            <h3 class="text-lg font-bold mb-4">Links</h3>
+            <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:underline">Home</a></li>
+            <li><a href="#" class="hover:underline">Vehicles</a></li>
+            <li><a href="#" class="hover:underline">Reservations</a></li>
+            </ul>
+        </div>
+
+        <!-- Services Links -->
+        <div>
+            <h3 class="text-lg font-bold mb-4">Services</h3>
+            <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:underline">Delivery</a></li>
+            <li><a href="#" class="hover:underline">Warranty</a></li>
+            </ul>
+        </div>
+
+        <!-- Company Links -->
+        <div>
+            <h3 class="text-lg font-bold mb-4">Company</h3>
+            <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:underline">Contact Us</a></li>
+            <li><a href="#" class="hover:underline">Our policy</a></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="mt-8 border-t border-gray-300 pt-4 text-center text-sm text-gray-600">
+      &copy; 2025 CAREX. All rights reserved.
+    </div>
+  </div>
+</footer>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

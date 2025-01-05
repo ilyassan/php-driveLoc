@@ -66,7 +66,7 @@
     <div id="alert" class="text-center py-6"></div>
     <div id="vehicles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($vehicles as $vehicle): ?>
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div onclick="window.location.href='<?= htmlspecialchars(URLROOT . 'vehicles/' . $vehicle['id']) ?>'" class="bg-white cursor-pointer shadow-md rounded-lg overflow-hidden">
             <img src="<?= ASSETSROOT . "images/vehicles/" . $vehicle['image_name'] ?>" alt="Car Image" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h3 class="text-lg font-bold text-secondary"><?= htmlspecialchars($vehicle["name"]) ?></h3>
@@ -174,7 +174,7 @@
         }
         filteredVehicles.forEach(vehicle => {
             const cardHTML = `
-                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div onclick="window.location.href='<?= htmlspecialchars(URLROOT . 'vehicles/') ?>${vehicle.id}'" class="bg-white cursor-pointer shadow-md rounded-lg overflow-hidden">
                     <img src="<?= ASSETSROOT . 'images/vehicles/'?>${vehicle.image_name}" alt="Car Image" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h3 class="text-lg font-bold text-secondary">${vehicle.name}</h3>

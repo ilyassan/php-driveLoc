@@ -154,12 +154,27 @@
         self::$db->execute();
     }
 
+    public function getNotAvailableDates()
+    {
+        $sql = "SELECT r.from_date, r.to_date
+                FROM vehicles v
+                JOIN reservations r ON r.vehicle_id = v.id
+                WHERE v.id = :id";
+
+        self::$db->query($sql);
+        self::$db->bind(':id', $this->id);
+
+        $results = self::$db->results();
+        return $results;
+    }
+
     public static function find(int $id) {
         $sql = "SELECT v.*, AVG(r.rate) as rating
                 FROM vehicles v
                 LEFT JOIN ratings r ON r.vehicle_id = v.id
                 WHERE v.id = :id
                 GROUP BY v.id";
+
         self::$db->query($sql);
         self::$db->bind(':id', $id);
 
