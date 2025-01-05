@@ -5,9 +5,10 @@
         public function index($id)
         {
             $vehicle = Vehicle::find($id);
+            $notAvailableDates = $vehicle->getNotAvailableDates();
             $places = Place::all();
             
-            $this->render("/vehicles/show", compact("vehicle", "places"));
+            $this->render("/vehicles/show", compact("vehicle", "notAvailableDates", "places"));
         }
 
         public function store()

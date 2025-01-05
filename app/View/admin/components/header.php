@@ -64,19 +64,6 @@
                     </a>
                 </div>
 
-                <!-- Reservations Section -->
-                <div class="space-y-1 pt-2">
-                    <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Reservations</p>
-                    <a href="reservations.php" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>All Reservations</span>
-                    </a>
-                    <a href="upcoming.php" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <i class="fas fa-clock"></i>
-                        <span>Upcoming</span>
-                    </a>
-                </div>
-
                 <!-- Users Section -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Users</p>

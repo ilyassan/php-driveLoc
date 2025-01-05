@@ -10,18 +10,18 @@
             </p>
             <div class="flex justify-center md:justify-start gap-5 text-3xl font-bold">
                 <div>
-                    <p class="text-secondary">50+</p>
+                    <p class="text-secondary">30+</p>
                     <p class="text-base font-semibold text-secondary">Car brands</p>
                 </div>
                 <div class="min-h-full w-0.5 bg-gray-200"></div>
                 <div>
-                    <p class="text-secondary">10k+</p>
+                    <p class="text-secondary">1k+</p>
                     <p class="text-base font-semibold text-secondary">Clients</p>
                 </div>
             </div>
         </div>
         <div class="hidden sm:block">
-            <img src="<?= htmlspecialchars(ASSETSROOT . "images/car-hero.jpg") ?>" alt="Car Hero" class="max-w-xl -scale-x-100 mx-auto">
+            <img src="<?= htmlspecialchars(ASSETSROOT . "images/car-hero.png") ?>" alt="Car Hero" class="max-w-2xl -scale-x-100 mx-auto">
         </div>
     </div>
 
@@ -73,3 +73,33 @@
     <a href="<?= htmlspecialchars(URLROOT . 'vehicles') ?>" class="bg-primary mx-auto block w-fit text-white px-3 py-2 rounded-lg font-semibold">Explore All Cars</a>
 
 </main>
+<section class="relative bg-gray-900 text-white">
+  <!-- Background Image -->
+  <div
+    class="absolute inset-0 bg-cover bg-center opacity-50"
+    style="background-image: url('https://static.vecteezy.com/system/resources/previews/023/218/471/large_2x/red-sports-car-on-the-road-in-the-mountains-ai-generate-free-photo.jpg');"
+  ></div>
+
+  <!-- Content Container -->
+  <div class="relative container mx-auto px-4 py-28 flex flex-col md:flex-row items-center gap-6">
+    <!-- Text Section -->
+    <div class="md:w-1/2">
+      <h2 class="text-4xl font-bold mb-4">CAREX NEWS</h2>
+      <p class="text-lg mb-6">
+        More than 50 cars are available to you by Carex.
+        Follow us to get notified by our latest cars.
+      </p>
+
+      <!-- Buttons -->
+      <div class="flex gap-4">
+        <a
+          href="#"
+          class="px-4 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700"
+        >
+          Receive news on your email
+        </a>
+      </div>
+    </div>
+    
+  </div>
+</section>

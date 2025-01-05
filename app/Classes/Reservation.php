@@ -156,6 +156,10 @@
                   (:from_date BETWEEN from_date AND to_date)
                   OR
                   (:to_date BETWEEN from_date AND to_date)
+                  OR
+                  (from_date BETWEEN :from_date AND :to_date)
+                  OR
+                  (to_date BETWEEN :from_date AND :to_date)
                   );";
 
         self::$db->query($sql);

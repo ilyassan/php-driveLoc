@@ -46,12 +46,12 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <!-- From Date -->
                         <div>
-                            <label for="fromDate" class="block text-gray-600 font-semibold mb-2">From Date:</label>
+                            <label for="fromDate" class="block text-gray-600 font-semibold mb-2">Pickup Date:</label>
                             <input placeholder="YYYY-MM-DD" type="date" id="fromDate" name="from_date" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         </div>
                         <!-- To Date -->
                         <div>
-                            <label for="toDate" class="block text-gray-600 font-semibold mb-2">To Date:</label>
+                            <label for="toDate" class="block text-gray-600 font-semibold mb-2">Return Date:</label>
                             <input placeholder="YYYY-MM-DD" type="date" id="toDate" name="to_date" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         </div>
 
@@ -136,10 +136,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        const notAvailableDates = [
-            ["2025-01-01", "2025-01-05"],
-            ["2024-12-20", "2024-12-22"]
-        ];
+        const notAvailableDates = (<?= json_encode($notAvailableDates) ?>).map(obj => [obj.from_date, obj.to_date]);
 
         const fromDateInput = document.getElementById('fromDate');
         const toDateInput = document.getElementById('toDate');
