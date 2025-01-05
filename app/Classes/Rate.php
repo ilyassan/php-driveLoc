@@ -55,7 +55,7 @@
     public function update()
     {
         $sql = "UPDATE ratings
-                SET rate = :rate
+                SET rate = :rate, is_deleted = 0
                 WHERE id = :id";
 
         self::$db->query($sql);
@@ -66,7 +66,10 @@
 
     public function delete()
     {
-        $sql = "DELETE FROM ratings WHERE id = :id";
+        $sql = "UPDATE ratings
+                SET is_deleted = 1
+                WHERE id = :id";
+
         self::$db->query($sql);
         self::$db->bind(':id', $this->id);
         self::$db->execute();
@@ -77,6 +80,7 @@
     {
         $sql = "SELECT * FROM ratings
                 WHERE client_id = :client_id AND vehicle_id = :vehicle_id";
+
         self::$db->query($sql);
         self::$db->bind(':client_id', $client_id);
         self::$db->bind(':vehicle_id', $vehicle_id);

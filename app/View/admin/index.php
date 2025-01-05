@@ -124,7 +124,7 @@
                                 echo '<i class="far fa-star"></i>';
                             }
                         ?>
-                        <span class="ml-2 text-gray-600">(<?= htmlspecialchars($topVehicle->rates_count) ?>) Review</span>
+                        <span class="ml-2 text-gray-600">(<?= htmlspecialchars(number_format($topVehicle->rating, 2)) ?>)</span>
                     </div>
                     <p class="text-gray-600 mt-2">Luxury Sports Car</p>
                     <p class="text-primary font-semibold mt-2">$<?= htmlspecialchars($topVehicle->price) ?>/day</p>
