@@ -6,7 +6,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg p-6">
         <!-- Car Image -->
         <div class="flex items-center justify-center">
-            <img src="<?= htmlspecialchars(ASSETSROOT . "images/porsche.webp") ?>" alt="Car Image" class="rounded-lg w-full h-80">
+            <img src="<?= $vehicle->getImagePath() ?>" alt="Car Image" class="rounded-lg w-full h-80">
         </div>
 
         <!-- Car Information -->

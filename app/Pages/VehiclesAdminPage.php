@@ -41,9 +41,9 @@
                 'category_id' => trim($_POST['category_id']),
                 'type_id' => trim($_POST['type_id']),
                 'seats' => trim($_POST['seats']),
-                'price_per_day' => trim($_POST['price_per_day'])
+                'price_per_day' => trim($_POST['price_per_day']),
+                'image' => $_FILES['image'],
             ];
-    
     
             $errors = [
                 'vehicle_name_err' => '',
@@ -52,6 +52,7 @@
                 'type_id_err' => '',
                 'seats_err' => '',
                 'price_per_day_err' => '',
+                'image_err' => '',
                 'general_err' => '',
             ];
     
@@ -83,11 +84,34 @@
             } elseif (!is_numeric($data['price_per_day']) || $data['price_per_day'] <= 0) {
                     $errors['price_per_day_err'] = 'Price per day must be a positive number.';
             }
+
+            $imageName = '';
+            if ($data['image']['error'] === UPLOAD_ERR_OK) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (in_array($data['image']['type'], $allowedTypes)) {
+                    $uploadDir = IMAGESROOT . 'vehicles/';
+                    
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+
+                    $imageName = time() . '_' . basename($data['image']['name']); // Generate unique filename
+                    $imagePath = $uploadDir . $imageName;
+
+                    if (!move_uploaded_file($data['image']['tmp_name'], $imagePath)) {
+                        $errors['image_err'] = 'Failed to upload the image.';
+                    }
+                } else {
+                    $errors['image_err'] = 'Invalid image format. Allowed formats are JPG, PNG, and GIF.';
+                }
+            } elseif ($data['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $errors['image_err'] = 'Error uploading the image.';
+            }
     
             // Check for errors and store into Database
             if (empty(array_filter($errors))) {
 
-                $vehicle = new Vehicle(null, $data['vehicle_name'], $data['vehicle_model'], $data['seats'], $data['price_per_day'], $data['type_id'], $data['category_id']);
+                $vehicle = new Vehicle(null, $data['vehicle_name'], $data['vehicle_model'], $data['seats'], $data['price_per_day'], $imageName, $data['type_id'], $data['category_id']);
 
                 if ($vehicle->save()) {
                     flash("success", "Vehicle added successfully!");
@@ -120,7 +144,8 @@
                 'category_id' => trim($_POST['category_id']),
                 'type_id' => trim($_POST['type_id']),
                 'seats' => trim($_POST['seats']),
-                'price_per_day' => trim($_POST['price_per_day'])
+                'price_per_day' => trim($_POST['price_per_day']),
+                'image' => $_FILES['image']
             ];
     
             $errors = [
@@ -130,7 +155,8 @@
                 'type_id_err' => '',
                 'seats_err' => '',
                 'price_per_day_err' => '',
-                'general_err' => '',
+                'image_err' => '',
+                'general_err' => ''
             ];
     
             // Validate the Inputs Data
@@ -161,22 +187,50 @@
             } elseif (!is_numeric($data['price_per_day']) || $data['price_per_day'] <= 0) {
                     $errors['price_per_day_err'] = 'Price per day must be a positive number.';
             }
+
+            $imageName = '';
+            if ($data['image']['error'] === UPLOAD_ERR_OK) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (in_array($data['image']['type'], $allowedTypes)) {
+                    $uploadDir = IMAGESROOT . 'vehicles/';
+                    $imageName = time() . '_' . basename($data['image']['name']);
+                    $imagePath = $uploadDir . $imageName;
+
+                    if (!move_uploaded_file($data['image']['tmp_name'], $imagePath)) {
+                        $errors['image_err'] = 'Failed to upload the image.';
+                    }
+                } else {
+                    $errors['image_err'] = 'Invalid image format. Allowed formats are JPG, PNG, and GIF.';
+                }
+            } elseif ($data['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                $errors['image_err'] = 'Error uploading the image.';
+            }
     
             // Check for errors and store into Database
             if (empty(array_filter($errors))) {
-
                 $vehicle = Vehicle::find($id);
-
+            
                 $vehicle->setName($data['vehicle_name']);
                 $vehicle->setModel($data['vehicle_model']);
                 $vehicle->setCategoryId($data['category_id']);
                 $vehicle->setTypeId($data['type_id']);
                 $vehicle->setSeats($data['seats']);
                 $vehicle->setPrice($data['price_per_day']);
-
+            
+                if (!empty($imageName)) {            
+                    $existingImage = $vehicle->getImageName();
+                    if (!empty($existingImage)) {
+                        $oldImagePath = $uploadDir . $existingImage;
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
+                    $vehicle->setImageName($imageName);
+                }
+            
                 if ($vehicle->update()) {
                     flash("success", "Vehicle Updated successfully!");
-                    redirect('vehicles/edit/'. $id);
+                    redirect('vehicles/edit/' . $id);
                 } else {
                     $errors['general_err'] = 'Something went wrong while updating the vehicle.';
                 }
